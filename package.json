@@ -1,0 +1,9 @@
+{
+  "name": "Megapytsker",
+  "version": "0.0.1",
+  "description": "Gonna be something",
+  "main": "index.js",
+  "repository": "https://vikmarchenko@bitbucket.org/vikmarchenko/megapytsker.git",
+  "author": "Viktor Marchenko <viktor.marchenko@gmail.com>",
+  "license": "closed"
+}
