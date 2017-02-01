@@ -1,6 +1,6 @@
 import SerialPort from 'serialport';
 import express from 'express';
-import config from './config';
+import config from '../config';
 
 // Hardware part
 const port = new SerialPort(config.arduinoPort, {
@@ -20,7 +20,7 @@ port.on('open', (err) => {
 
 // Web part
 const app = express();
-app.use(express.static(`../${config.webFolder}`));
+app.use(express.static(`./${config.webFolder}`));
 
 app.post('/servo', function (req, res) {
   if (req.headers.value){
