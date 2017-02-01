@@ -1,9 +1,14 @@
 {
-  "name": "Megapytsker server",
+  "name": "Megapytsker-server",
   "version": "0.0.1",
   "description": "Server part of application",
   "main": "index.js",
   "repository": "https://vikmarchenko@bitbucket.org/vikmarchenko/megapytsker.git",
   "author": "Viktor Marchenko <viktor.marchenko@gmail.com>",
-  "license": "closed"
+  "license": "closed",
+  "dependencies": {
+    "babel-preset-es2015": "^6.22.0",
+    "express": "^4.14.1",
+    "serialport": "^4.0.7"
+  }
 }
