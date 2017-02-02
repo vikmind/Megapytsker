@@ -1,17 +1,28 @@
 <template>
   <div id="app">
     <h1>{{ msg }}</h1>
+    <ul>
+      <li v-for="card in cards">
+        <CardButton
+          v-bind:number="card.number"
+          v-bind:angle="card.angle"
+          />
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
 import config from '../config';
+import CardButton from './CardButton.vue';
 
 export default {
   name: 'app',
+  components: { CardButton },
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your Vue.js App',
+      cards: config.cards
     }
   }
 }
@@ -22,7 +33,6 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
   margin-top: 60px;
 }
@@ -30,15 +40,11 @@ export default {
 h1, h2 {
   font-weight: normal;
 }
-
-ul {
-  list-style-type: none;
-  padding: 0;
+ul{
+  list-style: none;
 }
-
-li {
-  display: inline-block;
-  margin: 0 10px;
+li{
+  margin-bottom: 10px;
 }
 
 a {
