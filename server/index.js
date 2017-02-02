@@ -5,6 +5,8 @@ import config from '../config';
 // Hardware part
 const port = new SerialPort(config.arduinoPort, {
   baudRate: 9600
+}, function(err){
+  console.log(err);
 });
 
 port.on('data', (data) => {
@@ -24,9 +26,13 @@ app.use(express.static(`./${config.webFolder}`));
 
 app.post('/servo', function (req, res) {
   if (req.headers.value){
-    console.log('sent ' + req.headers.value);
-    port.write(req.headers.value + 'T');
-    res.send('ok');
+    if (port.isOpen()){
+      console.log('sent ' + req.headers.value);
+      port.write(req.headers.value + 'T');
+      res.send('ok');
+    } else {
+      res.send('not ok');
+    }
   } else {
     res.send('not ok');
   }

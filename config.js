@@ -1,6 +1,6 @@
 export default {
   arduinoPort: '/dev/cu.usbmodem1411',
-  webFolder: 'web',
+  webFolder: 'public',
   cards: [
     {
       angle: 0,

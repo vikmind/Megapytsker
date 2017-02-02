@@ -38,6 +38,7 @@ jspm_packages
 
 # Custom
 Hardware.pdf
+dist
 
 # OSX
 .DS_Store
