@@ -1,4 +1,4 @@
-import touchScreenFactory from './touchScreen';
+import inputTextFactory from './inputText';
 const client = {
   shell: function(id, str){
     console.log(`EXECUTE '${str}' ON DEVICE ${id}`);
@@ -11,6 +11,6 @@ const sleep = function(ms){
   return Promise.resolve(ms);
 };
 
-const touchScreen = touchScreenFactory({client, device, sleep});
-touchScreen(100, 100)
+const inputText = inputTextFactory({client, device, sleep});
+inputText("HELLO")
   .then(value => console.log(`resolved with ${value}`));
