@@ -1,12 +1,8 @@
 <template>
   <div id="app">
-    <h1>{{ msg }}</h1>
     <ul>
       <li v-for="card in cards">
-        <CardButton
-          v-bind:number="card.number"
-          v-bind:angle="card.angle"
-          />
+        <CardButton :card="card" />
       </li>
     </ul>
   </div>
@@ -21,18 +17,15 @@ export default {
   components: { CardButton },
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App',
       cards: config.cards
     }
   }
-}
+};
 </script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: Helvetica, Arial, sans-serif;
   color: #2c3e50;
   margin-top: 60px;
 }

@@ -1,15 +1,15 @@
 <template>
   <button
     type="button"
-    @click="moveServo">{{ number }}</button>
+    @click="moveServo">{{ card.number }}</button>
 </template>
 
 <script>
 export default {
-  props: ['number', 'angle'],
+  props: ['card'],
   methods: {
     moveServo: function(){
-      fetch('/servo', {method: 'POST', headers: {value: this.angle}});
+      fetch('/servo', {method: 'POST', headers: {value: this.card.angle}});
     }
   }
 }

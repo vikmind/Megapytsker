@@ -22,7 +22,13 @@ port.on('open', (err) => {
 
 // Web part
 const app = express();
+app.set('view engine', 'pug');
+app.set('views', process.cwd() + '/server');
 app.use(express.static(`./${config.webFolder}`));
+
+app.get('/', function (req, res) {
+  res.render('index');
+});
 
 app.post('/servo', function (req, res) {
   if (req.headers.value){
