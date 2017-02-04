@@ -4,6 +4,7 @@
       <li v-for="card in cards">
         <CardButton :card="card" />
       </li>
+      <FunButton />
     </ul>
   </div>
 </template>
@@ -11,10 +12,11 @@
 <script>
 import config from '../config';
 import CardButton from './CardButton.vue';
+import FunButton from './FunButton.vue';
 
 export default {
   name: 'app',
-  components: { CardButton },
+  components: { CardButton, FunButton },
   data () {
     return {
       cards: config.cards
@@ -35,6 +37,7 @@ h1, h2 {
 }
 ul{
   list-style: none;
+  padding: 0;
 }
 li{
   margin-bottom: 10px;

@@ -4,7 +4,7 @@ export function selectCard({port, cards, sleep}, number){
   if (!card) return Promise.resolve(false);
   if (port.isOpen()){
     port.write(card.angle + 'T');
-    return sleep(500).then(()=>{
+    return sleep(1000).then(()=>{
       port.write(defaultCard.angle + 'T');
       return true;
     });

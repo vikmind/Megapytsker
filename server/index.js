@@ -1,6 +1,11 @@
 import SerialPort from 'serialport';
 import express from 'express';
 import config from '../config';
+import sleep from 'then-sleep';
+import adb from 'adbkit';
+
+import selectCardFactory from './actions/selectCard';
+import touchScreenFactory from './actions/touchScreen';
 
 // Hardware part
 const port = new SerialPort(config.arduinoPort, {
@@ -20,6 +25,24 @@ port.on('open', (err) => {
   console.log('port opened');
 });
 
+// ADB stuff
+const sequence = [
+  {operation: 'selectCard',  args: ['INIT']},
+  {operation: 'touchScreen', args: [145, 254]}, // Touch "Read ticket"
+  {operation: 'selectCard',  args: ['AT 3390537C']},
+  {operation: 'touchScreen', args: [145, 254]}, // Touch center of the screen just to wait 2s
+  {operation: 'touchScreen', args: [163, 433]}  // Touch "OK"
+];
+let operations = {};
+const client = adb.createClient();
+client.listDevices()
+  .then(function(devices){
+    operations.touchScreen = touchScreenFactory({client, device: devices[0], sleep});
+  });
+
+// Init
+operations.selectCard = selectCardFactory({port, cards: config.cards, sleep});
+
 // Web part
 const app = express();
 app.set('view engine', 'pug');
@@ -34,11 +57,22 @@ app.post('/servo', function (req, res) {
   if (req.headers.value){
     if (port.isOpen()){
       console.log('sent ' + req.headers.value);
-      port.write(req.headers.value + 'T');
-      res.send('ok');
+      operations.selectCard(req.headers.value).then(()=>res.send('ok'));
     } else {
       res.send('not ok');
     }
+  } else {
+    res.send('not ok');
+  }
+});
+
+app.post('/fun', function(req, res){
+  if (port.isOpen()){
+    sequence.reduce(function(prev, cur){
+      console.log('executing', cur);
+      return prev.then(result => operations[cur.operation](...cur.args))
+    }, Promise.resolve()).then(()=> console.log('complete'));
+    res.send('fun!');
   } else {
     res.send('not ok');
   }

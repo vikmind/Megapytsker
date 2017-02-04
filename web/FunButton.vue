@@ -1,29 +1,28 @@
 <template>
   <button
-    class="card"
+    class="fun"
     type="button"
-    @click="moveServo">{{ card.number }}</button>
+    @click="fun">FUN</button>
 </template>
 
 <script>
 import 'whatwg-fetch';
 export default {
-  props: ['card'],
   methods: {
-    moveServo: function(){
-      fetch('/servo', {method: 'POST', headers: {value: this.card.number}});
+    fun: function(){
+      fetch('/fun', {method: 'POST'});
     }
   }
 }
 </script>
 
 <style lang="css">
-  button.card{
+  button.fun{
     padding: 20px;
     font-size: 16px;
-    background: #a9eca9;
+    background: #a9d0ec;
     min-width: 300px;
-    border: 2px solid #217521;
+    border: 2px solid #213375;
     border-radius: 5px;
     cursor: pointer;
   }
