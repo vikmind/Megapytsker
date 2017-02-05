@@ -5,7 +5,4 @@ html(lang="en")
     title Configuration with Vue
   body
     div#app
-    if process.env.NODE_ENV == 'development'
-      script(src="http://localhost:8080/dist/build.js")
-    else
-      script(src="/dist/build.js")
+    script(src="/dist/build.js")
