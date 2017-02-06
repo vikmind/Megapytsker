@@ -4,10 +4,6 @@ import config from '../config';
 import sleep from 'then-sleep';
 import adb from 'adbkit';
 
-import webpack from 'webpack';
-import webpackMiddleware from 'webpack-dev-middleware';
-import webpackConfig from '../webpack.config.js';
-
 import selectCardFactory from './actions/selectCard';
 import touchScreenFactory from './actions/touchScreen';
 import waitFactory from './actions/wait';
@@ -47,12 +43,19 @@ client.listDevices()
 const app = express();
 app.use(express.static(`./${config.webFolder}`));
 
-const compiler = webpack(webpackConfig);
-app.use(webpackMiddleware(compiler, {
-  publicPath: webpackConfig.output.publicPath,
-  noInfo: true
-}));
+// Webpack
+if (process.env.NODE_ENV === 'development'){
+  const webpack = require('webpack');
+  const webpackConfig = require('../webpack.config');
+  const compiler = webpack(webpackConfig);
+  app.use(require("webpack-dev-middleware")(compiler, {
+    publicPath: webpackConfig.output.publicPath,
+    noInfo: true
+  }));
+  app.use(require("webpack-hot-middleware")(compiler));
+}
 
+// Routes
 app.post('/servo', function (req, res) {
   if (req.headers.value){
     if (port.isOpen()){
@@ -81,6 +84,7 @@ app.post('/fun', function(req, res){
   }
 });
 
+// Action!
 app.listen(3000, () => {
   console.log('listening on port 3000');
 });
