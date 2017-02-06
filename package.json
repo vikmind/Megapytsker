@@ -8,13 +8,11 @@
   "private": true,
   "scripts": {
     "start": "cross-env NODE_ENV=development babel-node server/index.js",
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --inline --hot",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
     "adbkit": "^2.7.0",
     "express": "^4.14.1",
-    "pug": "^2.0.0-beta10",
     "serialport": "^4.0.7",
     "then-sleep": "^1.0.1",
     "vue": "^2.1.0",

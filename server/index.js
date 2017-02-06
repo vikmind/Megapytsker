@@ -8,21 +8,18 @@ import webpack from 'webpack';
 import webpackMiddleware from 'webpack-dev-middleware';
 import webpackConfig from '../webpack.config.js';
 
-
 import selectCardFactory from './actions/selectCard';
 import touchScreenFactory from './actions/touchScreen';
+import waitFactory from './actions/wait';
+import operationsExecutorFactory from './actions/operationsExecutor';
+import readTicket from '../tapes/read_ticket.json';
 
-// Hardware part
+// Arduino communication
 const port = new SerialPort(config.arduinoPort, {
   baudRate: 9600
 }, function(err){
   console.log(err);
 });
-
-port.on('data', (data) => {
-  console.log(`From device: ${data}`);
-});
-
 port.on('open', (err) => {
   if (err) {
     return console.log('Error on open: ', err.message);
@@ -30,28 +27,24 @@ port.on('open', (err) => {
   console.log('port opened');
 });
 
-// ADB stuff
-const sequence = [
-  {operation: 'selectCard',  args: ['INIT']},
-  {operation: 'touchScreen', args: [145, 254]}, // Touch "Read ticket"
-  {operation: 'selectCard',  args: ['AT 3390537C']},
-  {operation: 'touchScreen', args: [145, 254]}, // Touch center of the screen just to wait 2s
-  {operation: 'touchScreen', args: [163, 433]}  // Touch "OK"
-];
-let operations = {};
+// ADB and operations
+const sequence = readTicket.sequence;
+let operations = {
+  selectCard: selectCardFactory({port, cards: config.cards, sleep}),
+  wait: waitFactory({sleep})
+};
+let operationsExecutor = null;
+
 const client = adb.createClient();
 client.listDevices()
   .then(function(devices){
     operations.touchScreen = touchScreenFactory({client, device: devices[0], sleep});
-  });
+    operationsExecutor = operationsExecutorFactory({operations})
+});
 
-// Init
-operations.selectCard = selectCardFactory({port, cards: config.cards, sleep});
 
 // Web part
 const app = express();
-app.set('view engine', 'pug');
-app.set('views', process.cwd() + '/server');
 app.use(express.static(`./${config.webFolder}`));
 
 const compiler = webpack(webpackConfig);
@@ -59,10 +52,6 @@ app.use(webpackMiddleware(compiler, {
   publicPath: webpackConfig.output.publicPath,
   noInfo: true
 }));
-
-app.get('/', function (req, res) {
-  res.render('index');
-});
 
 app.post('/servo', function (req, res) {
   if (req.headers.value){
@@ -79,10 +68,13 @@ app.post('/servo', function (req, res) {
 
 app.post('/fun', function(req, res){
   if (port.isOpen()){
-    sequence.reduce(function(prev, cur){
-      console.log('executing', cur);
-      return prev.then(result => operations[cur.operation](...cur.args))
-    }, Promise.resolve()).then(()=> console.log('complete'));
+    operationsExecutor(
+      sequence,
+      function(current){
+        // TODO: inform client
+        console.log('executing', current.name);
+      }
+    ).then(()=> console.log('complete'));
     res.send('fun!');
   } else {
     res.send('not ok');
