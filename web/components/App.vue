@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import config from '../config';
+import config from '../../config';
 import CardButton from './CardButton.vue';
 import FunButton from './FunButton.vue';
 
