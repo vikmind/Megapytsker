@@ -1,22 +1,21 @@
 <template>
   <div id="app">
-    <ul>
-      <li v-for="card in cards">
-        <CardButton :card="card" />
-      </li>
-      <FunButton />
-    </ul>
+    <Topbar />
+    <Tapeslist :cards="cards"/>
   </div>
 </template>
 
 <script>
 import config from '../../config';
-import CardButton from './CardButton.vue';
-import FunButton from './FunButton.vue';
+
+import Topbar from './Topbar.vue';
+import Tapeslist from './Tapeslist.vue';
 
 export default {
   name: 'app',
-  components: { CardButton, FunButton },
+  components: {
+    Topbar, Tapeslist
+  },
   data () {
     return {
       cards: config.cards
@@ -26,10 +25,13 @@ export default {
 </script>
 
 <style>
+html,body{
+  padding: 0;
+  margin: 0;
+}
 #app {
-  font-family: Helvetica, Arial, sans-serif;
+  font-family: "Source Sans Pro", Helvetica, Arial, sans-serif;
   color: #2c3e50;
-  margin-top: 60px;
 }
 
 h1, h2 {

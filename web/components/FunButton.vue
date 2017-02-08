@@ -1,6 +1,6 @@
 <template>
   <button
-    class="fun"
+    class="tape is-fun"
     type="button"
     @click="fun">FUN</button>
 </template>
@@ -17,13 +17,8 @@ export default {
 </script>
 
 <style lang="css">
-  button.fun{
-    padding: 20px;
-    font-size: 16px;
+  .tape.is-fun{
     background: #a9d0ec;
-    min-width: 300px;
-    border: 2px solid #213375;
-    border-radius: 5px;
-    cursor: pointer;
+    border-color: #213375;
   }
 </style>

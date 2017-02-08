@@ -1,6 +1,6 @@
 <template>
   <button
-    class="card"
+    class="tape is-card"
     type="button"
     @click="moveServo">{{ card.number }}</button>
 </template>
@@ -18,13 +18,8 @@ export default {
 </script>
 
 <style lang="css">
-  button.card{
-    padding: 20px;
-    font-size: 16px;
-    background: #a9eca9;
-    min-width: 300px;
-    border: 2px solid #217521;
-    border-radius: 5px;
-    cursor: pointer;
-  }
+.tape.is-card{
+  background: #a9eca9;
+  border-color:#217521;
+}
 </style>

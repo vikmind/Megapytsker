@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="50px" height="50px" viewBox="0 0 50 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 42 (36781) - http://www.bohemiancoding.com/sketch -->
+    <title>icon-upload</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <circle id="path-1" cx="25" cy="25" r="25"></circle>
+        <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="50" height="50" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+    </defs>
+    <g id="Home" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(-465.000000, -143.000000)" id="Upload">
+            <g transform="translate(350.000000, 109.000000)">
+                <g id="content" transform="translate(32.000000, 34.000000)">
+                    <g id="icon-upload" transform="translate(83.000000, 0.000000)">
+                        <use id="Oval" stroke="#979797" mask="url(#mask-2)" stroke-width="6" xlink:href="#path-1"></use>
+                        <path d="M27.5,20 L27.5,32.5 L40,32.5 L40,36.5 L11,36.5 L11,32.5 L23.5,32.5 L23.5,20 L17,20 L25.5,7 L34,20 L27.5,20 Z" id="Combined-Shape" fill="#5D5D5D"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
