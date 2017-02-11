@@ -1,12 +1,12 @@
 <template lang="html">
-  <span class="status__item" :class="{ 'is-on': (this.param == 'servo'), 'is-off': (this.param == 'android') }">
+  <span class="status__item" :class="{ 'is-on': (this.status == true), 'is-off': (this.status == false) }">
     {{title}}
   </span>
 </template>
 
 <script>
 export default {
-  props: ['title', 'param']
+  props: ['title', 'param', 'status']
 }
 </script>
 

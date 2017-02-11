@@ -4,7 +4,7 @@
         class="logo"
         alt="Megapytsker">
     <div class="status">
-      <Status param="servo" title="Arduino" />
+      <Status param="servo" title="Arduino" :status="true" />
       <Status param="android" title="Device" />
     </div>
   </header>

@@ -84,6 +84,10 @@ app.post('/fun', function(req, res){
   }
 });
 
+app.get('/tapes', function(req, res){
+  res.send(require('../tapes/'));
+});
+
 // Action!
 app.listen(3000, () => {
   console.log('listening on port 3000');
