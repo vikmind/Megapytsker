@@ -14,4 +14,9 @@ const store = new Vuex.Store({
   }
 });
 
+import socket from '../socket.js';
+socket.on('hi', function(data){
+  console.log('hi');
+})
+
 export default store;

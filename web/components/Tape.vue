@@ -1,5 +1,5 @@
 <template lang="html">
-  <button class="tape" :class="{'is-green' : (type == 'file')}">
+  <button class="tape" @click="clickBtn" :class="{'is-green' : (type == 'file')}">
     <span v-if="(type == 'upload')"><img :src="upload" alt=""><br></span>
     <span v-if="(type == 'create')"><img :src="create" alt=""><br></span>
     <span>{{ tape ? tape.name : type  }}</span>
@@ -9,12 +9,18 @@
 <script>
 import upload from '../img/icon-upload.svg';
 import create from '../img/icon-add.svg';
+import socket from '../socket.js';
 export default {
   props: ['type', 'tape'],
   data (){
     return {
       upload,
       create
+    }
+  },
+  methods: {
+    clickBtn: function(){
+      socket.emit('hello');
     }
   }
 }

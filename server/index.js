@@ -1,5 +1,4 @@
 import SerialPort from 'serialport';
-import express from 'express';
 import config from '../config';
 import sleep from 'then-sleep';
 import adb from 'adbkit';
@@ -40,7 +39,10 @@ client.listDevices()
 
 
 // Web part
-const app = express();
+const express = require('express');
+const app = require('express')();
+const http = require('http').Server(app);
+const io = require('socket.io')(http, { serveClient: false });
 app.use(express.static(`./${config.webFolder}`));
 
 // Webpack
@@ -88,7 +90,20 @@ app.get('/tapes', function(req, res){
   res.send(require('../tapes/'));
 });
 
+// WebSocket
+io.on('connection', function connection(socket){
+  console.log(socket.id, 'connected!');
+  setTimeout(function(){
+    socket.emit('init', 'INIT info');
+    console.log('emitted', socket.id);
+  }, 1000);
+  socket.on('hello', function hello(data){
+    console.log('hello', data);
+    socket.emit('hi');
+  });
+});
+
 // Action!
-app.listen(3000, () => {
+http.listen(3000, () => {
   console.log('listening on port 3000');
 });
