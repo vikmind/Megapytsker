@@ -5,7 +5,10 @@ export function operationsExecutor({operations}, sequence, stepCallback){
           if (typeof(stepCallback) == "function"){
             stepCallback(cur);
           }
-          return operations[cur.operation](...cur.args)
+          return operations[cur.operation](...cur.args).catch( err => {
+            console.error('Something went wrong:', err.stack);
+            throw new Error(`Operation "${cur.operation}" failed with ${err}`)
+          });
         })
       },
       Promise.resolve()

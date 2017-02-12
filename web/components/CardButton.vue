@@ -6,12 +6,13 @@
 </template>
 
 <script>
-import 'whatwg-fetch';
+import socket from '../socket.js';
+
 export default {
   props: ['card'],
   methods: {
     moveServo: function(){
-      fetch('/servo', {method: 'POST', headers: {value: this.card.number}});
+      socket.emit('card', {value: this.card.number});
     }
   }
 }

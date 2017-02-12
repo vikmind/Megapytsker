@@ -9,7 +9,7 @@ export function selectCard({port, cards, sleep}, number){
       return true;
     });
   } else {
-    return Promise.resolve(false);
+    return Promise.reject(new Error('Arduino not connected'));
   }
 };
 

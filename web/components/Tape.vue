@@ -20,7 +20,7 @@ export default {
   },
   methods: {
     clickBtn: function(){
-      socket.emit('hello');
+      socket.emit('echo', {some:'data'});
     }
   }
 }

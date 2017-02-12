@@ -14,9 +14,8 @@ export default {
 .status__item{
   font-size: 18px;
   font-weight: 600;
-}
-.status__item + .status__item{
   margin-left: 10px;
+  white-space: nowrap;
 }
 .status__item::after{
   content: '';

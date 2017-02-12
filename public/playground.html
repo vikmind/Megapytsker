@@ -25,14 +25,16 @@
   <button data-action="send-value" data-value="69">3</button>
   <button data-action="send-value" data-value="111">4</button>
   <button data-action="send-value" data-value="152">5</button>
+  <script src="/socket.io/socket.io.js"></script>
 <script type="text/javascript">
   (function(){
+  const socket = io();
   const slider = document.getElementById('megaslider');
   const moveServo = function(value){
-    fetch('/servo', {method: 'POST', headers: {value: value}});
+    socket.emit('servo', {value: value});
     document.getElementById('megavalue').innerHTML = value;
   };
-  slider.addEventListener('change', (e)=>{ moveServo(slider.value) });
+  slider.addEventListener('input', (e)=>{ moveServo(slider.value) });
   const buttons = document.body.querySelectorAll('[data-action=send-value]');
   buttons.forEach(function(btn){
     btn.addEventListener('click', moveServo.bind(null, btn.getAttribute('data-value')));

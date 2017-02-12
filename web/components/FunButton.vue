@@ -6,11 +6,17 @@
 </template>
 
 <script>
-import 'whatwg-fetch';
+import socket from '../socket';
+
+let sequence = [];
+socket.on('init', function(data){
+  console.log('init from fun', data);
+  sequence = data.tapes.read_ticket.sequence;
+});
 export default {
   methods: {
     fun: function(){
-      fetch('/fun', {method: 'POST'});
+      socket.emit('execute', {sequence});
     }
   }
 }

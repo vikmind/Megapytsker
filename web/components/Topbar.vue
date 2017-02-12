@@ -6,6 +6,7 @@
     <div class="status">
       <Status param="servo" title="Arduino" :status="true" />
       <Status param="android" title="Device" />
+      <Status param="server" title="Server" />
     </div>
   </header>
 </template>
@@ -34,7 +35,19 @@ export default {
     align-items: center;
     padding: 18px 20px;
   }
-  .logo{
-
+  .status{
+    text-align: right;
+  }
+  @media only screen and (max-width:560px){
+    .topbar{
+      flex-direction: column;
+    }
+    .logo{
+      align-self: flex-start;
+      margin-bottom: 1em;
+    }
+    .status{
+      align-self: flex-end;
+    }
   }
 </style>
