@@ -4,8 +4,8 @@
         class="logo"
         alt="Megapytsker">
     <div class="status">
-      <Status param="servo" title="Arduino" :status="true" />
-      <Status param="android" title="Device" />
+      <Status param="arduino" title="Arduino"/>
+      <Status param="famoco" title="Device" />
       <Status param="server" title="Server" />
     </div>
   </header>

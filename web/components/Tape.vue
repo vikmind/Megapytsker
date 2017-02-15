@@ -1,15 +1,16 @@
 <template lang="html">
-  <button class="tape" @click="clickBtn" :class="{'is-green' : (type == 'file')}">
+  <button class="tape" @click="executeSequence(tape)" :class="{'is-green' : (type == 'file')}">
     <span v-if="(type == 'upload')"><img :src="upload" alt=""><br></span>
     <span v-if="(type == 'create')"><img :src="create" alt=""><br></span>
-    <span>{{ tape ? tape.name : type  }}</span>
+    <span>{{ tape.name  }}</span>
   </button>
 </template>
 
 <script>
 import upload from '../img/icon-upload.svg';
 import create from '../img/icon-add.svg';
-import socket from '../socket.js';
+import { mapActions } from 'vuex'
+
 export default {
   props: ['type', 'tape'],
   data (){
@@ -18,11 +19,9 @@ export default {
       create
     }
   },
-  methods: {
-    clickBtn: function(){
-      socket.emit('echo', {some:'data'});
-    }
-  }
+  methods: mapActions([
+    'executeSequence'
+  ])
 }
 </script>
 
@@ -30,7 +29,7 @@ export default {
 .tape{
   padding: 10px;
   border: 1px solid #979797;
-  height: 160px;
+  height: 180px;
   width: 280px;
   margin: 0 20px 20px 0;
   position: relative;
@@ -43,6 +42,7 @@ export default {
   box-shadow: 2px 2px 1px 0 #bbb;
   transform: translate(-2px, -2px);
   transition: box-shadow .2s, transform .2s;
+  will-change: transform;
 }
 .tape:hover{
   box-shadow: 3px 3px 0 0 lightgray;

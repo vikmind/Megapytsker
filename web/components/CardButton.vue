@@ -2,17 +2,22 @@
   <button
     class="tape is-card"
     type="button"
-    @click="moveServo">{{ card.number }}</button>
+    @click="selectCard(card.number)"
+    v-html="text"
+    ></button>
 </template>
 
 <script>
-import socket from '../socket.js';
+import { mapActions } from 'vuex'
 
 export default {
   props: ['card'],
-  methods: {
-    moveServo: function(){
-      socket.emit('card', {value: this.card.number});
+  methods: mapActions([
+    'selectCard'
+  ]),
+  data(){
+    return {
+      text: (this.card.number !== 'INIT') ? `ARROWPASS<BR>${this.card.number}` : '| EMPTY |'
     }
   }
 }
@@ -22,5 +27,6 @@ export default {
 .tape.is-card{
   background: #a9eca9;
   border-color:#217521;
+  line-height: 1.8;
 }
 </style>

@@ -1,12 +1,16 @@
 <template lang="html">
-  <span class="status__item" :class="{ 'is-on': (this.status == true), 'is-off': (this.status == false) }">
+  <span class="status__item"
+        :class="{
+          'is-on': ($store.state.status[param] == true),
+          'is-off': ($store.state.status[param] == false)
+        }">
     {{title}}
   </span>
 </template>
 
 <script>
 export default {
-  props: ['title', 'param', 'status']
+  props: ['title', 'param']
 }
 </script>
 

@@ -1,13 +1,12 @@
-export function selectCard({port, cards, sleep}, number){
+export function selectCard({port, cards, sleep}, number, time){
   const card = cards.find(el => el.number === number);
   const defaultCard = cards.find(el => el.number === 'INIT');
+  const sleepTime = time || 1000;
   if (!card) return Promise.resolve(false);
   if (port.isOpen()){
     port.write(card.angle + 'T');
-    return sleep(1000).then(()=>{
-      port.write(defaultCard.angle + 'T');
-      return true;
-    });
+    return sleep(sleepTime)
+            .then(result => true);
   } else {
     return Promise.reject(new Error('Arduino not connected'));
   }

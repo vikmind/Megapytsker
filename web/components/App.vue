@@ -1,12 +1,11 @@
 <template>
   <div id="app">
     <Topbar />
-    <Tapeslist :cards="cards"/>
+    <Tapeslist/>
   </div>
 </template>
 
 <script>
-import config from '../../config';
 
 import Topbar from './Topbar.vue';
 import Tapeslist from './Tapeslist.vue';
@@ -15,11 +14,6 @@ export default {
   name: 'app',
   components: {
     Topbar, Tapeslist
-  },
-  data () {
-    return {
-      cards: config.cards
-    }
   }
 };
 </script>

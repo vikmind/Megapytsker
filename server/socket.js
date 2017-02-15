@@ -6,12 +6,6 @@ export default function socketConnectionCallback({operationsExecutor, port, devi
   console.log(socket.id, 'connected!');
   const stepReporter = stepReporterFactory.bind(null, socket);
 
-  // Echo
-  socket.on('echo', function hello(data){
-    console.log('echo', data);
-    socket.emit('echooo', data);
-  });
-
   // Servo slider
   socket.on('servo', function(data){
     console.log(`emit servo with ${data.value}`);
@@ -38,9 +32,13 @@ export default function socketConnectionCallback({operationsExecutor, port, devi
   });
 
   // Init
+  const tapes = require('../tapes');
   socket.emit('init', {
-    arduino: port.isOpen(),
-    device: !!device,
-    tapes: require('../tapes')
+    status: {
+      arduino: port.isOpen(),
+      famoco: !!device,
+      server: true
+    },
+    tapes: Object.keys(tapes).map(key => tapes[key])
   });
 };

@@ -2,19 +2,24 @@
   "name": "Read ticket from admin screen",
   "sequence": [
     {
+      "name": "Select default card",
+      "operation": "selectCard",
+      "args": ["INIT", 0]
+    },
+    {
       "name": "Touch \"Read ticket\"",
       "operation": "touchScreen",
       "args": [145, 254]
     },
     {
-      "name": "Select card \"AT 3390537C\"",
+      "name": "Select card \"AT 3390537C\" and wait 2s",
       "operation": "selectCard",
-      "args": ["AT 3390537C"]
+      "args": ["AT 3390537C", 2000]
     },
     {
-      "name": "Wait 2s",
-      "operation": "wait",
-      "args": 2000
+      "name": "Select default card",
+      "operation": "selectCard",
+      "args": ["INIT", 0]
     },
     {
       "name": "Touch \"OK\"",
