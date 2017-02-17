@@ -6,6 +6,11 @@ import * as types from './mutation-types.js';
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
+  getters: {
+    openedTape: store => {
+      return store.tapes.find(item => item.id === store.openedTapeId)
+    }
+  },
   actions: {
     selectCard ({}, number){
       socket.emit('card', {value: number});
@@ -14,9 +19,15 @@ const store = new Vuex.Store({
       if (tape.sequence){
         socket.emit('execute', tape);
       } else {
-        console.log('TODO', tape.name);
+        console.log('TODO:', tape.name);
       }
-    }
+    },
+    openTape ({commit, state}, tapeId){
+      commit(types.OPEN_TAPE, tapeId);
+    },
+    closeTape ({commit, state}, tapeId){
+      commit(types.CLOSE_TAPE);
+    },
   },
   state: {
     cards: config.cards,
@@ -25,7 +36,8 @@ const store = new Vuex.Store({
       famoco: null,
       server: null
     },
-    tapes: []
+    tapes: [],
+    openedTapeId: null
   },
   mutations: {
     [types.INIT_STATUS] (state, status) {
@@ -35,7 +47,13 @@ const store = new Vuex.Store({
       state.tapes = tapes
     },
     [types.UPDATE_STATUS] (state, status) {
-      state.status = Object.assign({}, state.status, status);
+      state.status = {...state.status, status};
+    },
+    [types.OPEN_TAPE] (state, tapeId) {
+      state.openedTapeId = tapeId;
+    },
+    [types.CLOSE_TAPE] (state) {
+      state.openedTapeId = null;
     }
   }
 });

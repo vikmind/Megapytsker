@@ -2,6 +2,7 @@
   <div id="app">
     <Topbar />
     <Tapeslist/>
+    <TapeModal/>
   </div>
 </template>
 
@@ -9,11 +10,12 @@
 
 import Topbar from './Topbar.vue';
 import Tapeslist from './Tapeslist.vue';
+import TapeModal from './TapeModal.vue';
 
 export default {
   name: 'app',
   components: {
-    Topbar, Tapeslist
+    Topbar, Tapeslist, TapeModal
   }
 };
 </script>
@@ -22,10 +24,16 @@ export default {
 html,body{
   padding: 0;
   margin: 0;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
 }
 #app {
   font-family: "Source Sans Pro", Helvetica, Arial, sans-serif;
   color: #2c3e50;
+  overflow: hidden;
+  overflow-y: scroll;
+  height: 100%;
 }
 
 h1, h2 {

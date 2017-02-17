@@ -1,37 +1,43 @@
 <template lang="html">
-  <button class="tape" @click="executeSequence(tape)" :class="{'is-green' : (type == 'file')}">
-    <span v-if="(type == 'upload')"><img :src="upload" alt=""><br></span>
-    <span v-if="(type == 'create')"><img :src="create" alt=""><br></span>
+  <div class="tape__wrapper">
+  <button class="tape" @click="openTape(tape.id)" :class="{'is-green' : (type == 'file')}">
+    <span v-if="(type == 'upload')"><img src="../img/icon-upload.svg" alt=""><br></span>
+    <span v-if="(type == 'create')"><img src="../img/icon-add.svg" alt=""><br></span>
     <span>{{ tape.name  }}</span>
   </button>
+  </div>
 </template>
 
 <script>
-import upload from '../img/icon-upload.svg';
-import create from '../img/icon-add.svg';
 import { mapActions } from 'vuex'
 
 export default {
   props: ['type', 'tape'],
   data (){
     return {
-      upload,
-      create
+      opened: (this.type == 'create')
     }
   },
   methods: mapActions([
-    'executeSequence'
+    'openTape'
   ])
 }
 </script>
 
 <style lang="css">
-.tape{
-  padding: 10px;
-  border: 1px solid #979797;
+.tape__wrapper{
   height: 180px;
   width: 280px;
   margin: 0 20px 20px 0;
+  display: flex;
+  flex: 1 0 240px;
+  max-width: 280px;
+}
+.tape{
+  flex: 1;
+  align-self: stretch;
+  padding: 10px;
+  border: 1px solid #979797;
   position: relative;
 
   cursor: pointer;

@@ -39,6 +39,6 @@ export default function socketConnectionCallback({operationsExecutor, port, devi
       famoco: !!device,
       server: true
     },
-    tapes: Object.keys(tapes).map(key => tapes[key])
+    tapes: Object.keys(tapes).map((key,i) => Object.assign({}, tapes[key], {id: ++i}))
   });
 };
