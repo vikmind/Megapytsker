@@ -12,7 +12,7 @@
       "args": [145, 254]
     },
     {
-      "name": "Select card \"AT 3390537C\" and wait 2s",
+      "name": "Select card \"AT&nbsp;3390537C\" and wait 2s",
       "operation": "selectCard",
       "args": ["AT 3390537C", 2000]
     },

@@ -27,6 +27,10 @@ html,body{
   overflow: hidden;
   width: 100%;
   height: 100%;
+  box-sizing: border-box;
+}
+*,*::before,*::after{
+  box-sizing: inherit;
 }
 #app {
   font-family: "Source Sans Pro", Helvetica, Arial, sans-serif;

@@ -25,6 +25,13 @@ const store = new Vuex.Store({
     openTape ({commit, state}, tapeId){
       commit(types.OPEN_TAPE, tapeId);
     },
+    editTape ({commit, state}, tapeId){
+      commit(types.EDIT_TAPE, tapeId);
+    },
+    saveTape ({commit, state}, tape){
+      commit(types.SAVE_TAPE, tape);
+      socket.emit('save_tape', tape);
+    },
     closeTape ({commit, state}, tapeId){
       commit(types.CLOSE_TAPE);
     },
@@ -37,7 +44,8 @@ const store = new Vuex.Store({
       server: null
     },
     tapes: [],
-    openedTapeId: null
+    openedTapeId: null,
+    openedMode: 'view'
   },
   mutations: {
     [types.INIT_STATUS] (state, status) {
@@ -51,6 +59,14 @@ const store = new Vuex.Store({
     },
     [types.OPEN_TAPE] (state, tapeId) {
       state.openedTapeId = tapeId;
+      state.openedMode = 'view';
+    },
+    [types.EDIT_TAPE] (state, tapeId){
+      state.openedTapeId = tapeId;
+      state.openedMode = 'edit';
+    },
+    [types.SAVE_TAPE] (state, tape){
+      state.openedMode = 'view';
     },
     [types.CLOSE_TAPE] (state) {
       state.openedTapeId = null;
@@ -58,8 +74,10 @@ const store = new Vuex.Store({
   }
 });
 
-import socket from '../socket.js';
+import io from 'socket.io-client';
+const socket = io();
 socket.on('init', function(data){
+  console.log('init data', data);
   store.commit(types.INIT_STATUS, data.status);
   store.commit(types.INIT_TAPES, data.tapes);
 });
