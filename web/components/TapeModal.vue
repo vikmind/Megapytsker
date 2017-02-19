@@ -1,24 +1,21 @@
 <template lang="html">
-<div>
-  <transition name="modal-fade">
-    <div class="tapemodal" v-if="$store.state.openedTapeId">
-      <div class="tapemodal__header">
-        <h1 class="tapemodal__title">{{ openedTape.name }}</h1>
-        <div class="tapemodal__actions">
-          <button @click="executeSequence(openedTape)">Execute</button>
-          <button v-if="$store.state.openedMode === 'view'" @click="editTape(openedTape.id)">Edit</button>
-          <button v-else @click="saveTape(openedTape)">Save</button>
-          <button @click="closeTape()">X</button>
-        </div>
-      </div>
-      <div class="tapemodal__body">
-        <div class="operations-list">
-          <Operation :operation="operation" :mode="$store.state.openedMode" v-for="operation in openedTape.sequence" />
-        </div>
+  <div class="tapemodal">
+    <div class="tapemodal__header">
+      <h1 v-if="$store.state.openedMode === 'view'" class="tapemodal__title">{{ tape.name }}</h1>
+      <input v-if="$store.state.openedMode === 'edit'" type="text" v-model="tape.name">
+      <div class="tapemodal__actions">
+        <button @click="executeSequence(tape)">Execute</button>
+        <button v-if="$store.state.openedMode === 'view'" @click="editTape(tape.id)">Edit</button>
+        <button v-else @click="saveTape(tape)">Save</button>
+        <button @click="closeTape()">X</button>
       </div>
     </div>
-  </transition>
-</div>
+    <div class="tapemodal__body">
+      <div class="operations-list">
+        <Operation :operation="operation" :mode="$store.state.openedMode" v-for="operation in tape.sequence" />
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -28,9 +25,11 @@ export default {
   components: {
     Operation
   },
-  computed: {
-    openedTape(){
-      return this.$store.getters.openedTape;
+  data (){
+    // Deep clone is needed
+    const tape = this.$store.state.tapes.find(item => item.id === this.$store.state.openedTapeId);
+    return {
+      tape: JSON.parse(JSON.stringify(tape))
     }
   },
   methods: mapActions([

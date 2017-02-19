@@ -15,17 +15,17 @@ const operations = {
 const sequence = [
   {
     name: 1,
-    operation: 'sleep1s',
+    type: 'sleep1s',
     args: ['hello']
   },
   {
     name: 2,
-    operation: 'sleep2s',
+    type: 'sleep2s',
     args: ['beautiful']
   },
   {
     name: 3,
-    operation: 'sleep1s',
+    type: 'sleep1s',
     args: ['world']
   }
 ];

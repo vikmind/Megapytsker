@@ -3,7 +3,7 @@
     <button
       class="tape is-card"
       type="button"
-      @click="selectCard(card.number)"
+      @click="selectCard(card)"
       v-html="text"
       ></button>
     </div>
@@ -19,7 +19,7 @@ export default {
   ]),
   data(){
     return {
-      text: (this.card.number !== 'INIT') ? `ARROWPASS<BR>${this.card.number}` : '| EMPTY |'
+      text: (this.card !== 'INIT') ? `ARROWPASS<BR>${this.card}` : '| EMPTY |'
     }
   }
 }

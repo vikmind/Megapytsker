@@ -22,5 +22,55 @@ export default {
       angle: 152,
       number: 'AT 8824065F'
     }
+  ],
+  operationTypes: [
+    {
+      identifier: 'selectCard',
+      name: 'Select Card',
+      arguments: [
+        {
+          name: 'ArrowPass ID',
+          type: 'Cards'
+        },
+        {
+          name: 'Delay (ms)',
+          type: 'Integer'
+        }
+      ]
+    },
+    {
+      identifier: 'touchScreen',
+      name: 'Touch Screen',
+      arguments: [
+        {
+          name: 'X',
+          type: 'Integer'
+        },
+        {
+          name: 'Y',
+          type: 'Integer'
+        }
+      ]
+    },
+    {
+      identifier: 'inputText',
+      name: 'Input Text',
+      arguments: [
+        {
+          name: 'Text',
+          type: 'String'
+        }
+      ]
+    },
+    {
+      identifier: 'wait',
+      name: 'Waiting',
+      arguments: [
+        {
+          name: 'Delay (ms)',
+          type: 'Integer'
+        }
+      ]
+    }
   ]
 };

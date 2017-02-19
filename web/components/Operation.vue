@@ -2,17 +2,24 @@
   <div v-if="mode !== 'edit'" class="operation">
     <div class="operation__content">
       <h2 class="operation__title" v-html="operation.name"></h2>
-      <div v-if="operation.operation === 'selectCard'"
+      <div v-if="operation.type === 'selectCard'"
           class="operation__card">
           <span v-if="operation.args[0] !== 'INIT'">ARROWPASS<BR></span>
           {{ operation.args[0] }}
       </div>
+      <div v-else-if="operation.type === 'touchScreen'">
+        <div class="operation__card">
+          <div>
+            <strong>X:</strong><span>{{ operation.args[0] }}</span>
+          </div>
+          <div>
+            <strong>Y:</strong><span>{{ operation.args[1] }}</span>
+          </div>
+        </div>
+      </div>
       <pre v-else>{{ JSON.stringify(operation, null, 2) }}</pre>
     </div>
-    <div class="operation__actions">
-      <button>E</button>
-      <button>X</button>
-    </div>
+    <div class="operation__actions"></div>
   </div>
   <OperationEdit :operation="operation" v-else />
 </template>

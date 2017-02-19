@@ -2,7 +2,9 @@
   <div id="app">
     <Topbar />
     <Tapeslist/>
-    <TapeModal/>
+    <transition name="modal-fade">
+      <TapeModal v-if="$store.state.openedTapeId"/>
+    </transition>
   </div>
 </template>
 
