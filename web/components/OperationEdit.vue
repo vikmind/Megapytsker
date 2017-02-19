@@ -18,6 +18,7 @@
         </select>
       </div>
     </div>
+    <button @click="$emit('delete')">Delete</button>
   </div>
 </template>
 

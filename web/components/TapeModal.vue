@@ -11,8 +11,24 @@
       </div>
     </div>
     <div class="tapemodal__body">
-      <div class="operations-list">
-        <Operation :operation="operation" :mode="$store.state.openedMode" v-for="operation in tape.sequence" />
+      <div v-if="$store.state.openedMode === 'view'" class="operations-list">
+        <Operation
+            :operation="operation"
+            v-for="operation in tape.sequence"
+          />
+      </div>
+      <div v-if="$store.state.openedMode === 'edit'" class="operations-list">
+        <OperationEdit
+            :operation="operation"
+            v-for="(operation,idx) in tape.sequence"
+            v-on:delete="onDelete(tape, idx)"
+          />
+        <button
+            class="operation"
+            @click="onAdd(tape)"
+          >
+          Add new
+        </button>
       </div>
     </div>
   </div>
@@ -21,9 +37,11 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import Operation from './Operation.vue';
+import OperationEdit from './OperationEdit.vue';
 export default {
   components: {
-    Operation
+    Operation,
+    OperationEdit
   },
   data (){
     // Deep clone is needed
@@ -32,12 +50,20 @@ export default {
       tape: JSON.parse(JSON.stringify(tape))
     }
   },
-  methods: mapActions([
-    'closeTape',
-    'editTape',
-    'saveTape',
-    'executeSequence'
-  ])
+  methods: {
+    ...mapActions([
+      'closeTape',
+      'editTape',
+      'saveTape',
+      'executeSequence'
+    ]),
+    onDelete: (tape, idx) => {
+      tape.sequence.splice(idx, 1);
+    },
+    onAdd: (tape) => {
+      tape.sequence.push({type: 'selectCard', args: []})
+    }
+  }
 }
 </script>
 
@@ -64,6 +90,7 @@ export default {
   border-bottom: 1px solid #979797;
   box-shadow: 0 2px 4px 0 rgba(0,0,0,0.22);
   flex: 1 0 auto;
+  min-height: 69px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -90,5 +117,6 @@ h1.tapemodal__title{
   overflow: hidden;
   overflow-y: scroll;
   padding: 18px 20px;
+  min-height: calc(100% - 69px);
 }
 </style>

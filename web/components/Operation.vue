@@ -1,5 +1,5 @@
 <template lang="html">
-  <div v-if="mode !== 'edit'" class="operation">
+  <div class="operation">
     <div class="operation__content">
       <h2 class="operation__title" v-html="operation.name"></h2>
       <div v-if="operation.type === 'selectCard'"
@@ -21,16 +21,11 @@
     </div>
     <div class="operation__actions"></div>
   </div>
-  <OperationEdit :operation="operation" v-else />
 </template>
 
 <script>
-import OperationEdit from './OperationEdit.vue';
 export default {
-  components: {
-    OperationEdit
-  },
-  props: ['operation', 'mode'],
+  props: ['operation'],
 }
 </script>
 
