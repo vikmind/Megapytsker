@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="operation">
+  <div class="operation operation-edit">
     <label>Type</label>
     <select v-model="operation.type">
       <option v-for="type in $store.state.operationTypes" :value="type.identifier">
@@ -29,4 +29,7 @@ export default {
 </script>
 
 <style lang="css">
+.operation-edit label{
+  display: block;
+}
 </style>

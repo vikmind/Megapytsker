@@ -1,0 +1,17 @@
+{
+  "development": {
+    "database": "megapytsker",
+    "dialect": "sqlite",
+    "storage": "../tapes/db.sqlite"
+  },
+  "test": {
+    "database": "megapytsker",
+    "dialect": "sqlite",
+    "storage": "../tapes/db.sqlite"
+  },
+  "production": {
+    "database": "megapytsker",
+    "dialect": "sqlite",
+    "storage": "../tapes/db.sqlite"
+  }
+}
