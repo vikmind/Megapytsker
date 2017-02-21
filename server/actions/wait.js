@@ -1,5 +1,5 @@
 export function wait({sleep}, ms){
-  return sleep(ms)
+  return sleep(parseInt(ms, 10))
           .then(result => true);
 };
 

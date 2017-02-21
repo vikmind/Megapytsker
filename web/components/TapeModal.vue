@@ -14,13 +14,13 @@
       <div v-if="$store.state.openedMode === 'view'" class="operations-list">
         <Operation
             :operation="operation"
-            v-for="operation in tape.sequence"
+            v-for="operation in tape.Operations"
           />
       </div>
       <div v-if="$store.state.openedMode === 'edit'" class="operations-list">
         <OperationEdit
             :operation="operation"
-            v-for="(operation,idx) in tape.sequence"
+            v-for="(operation,idx) in tape.Operations"
             v-on:delete="onDelete(tape, idx)"
           />
         <button
@@ -58,10 +58,10 @@ export default {
       'executeSequence'
     ]),
     onDelete: (tape, idx) => {
-      tape.sequence.splice(idx, 1);
+      tape.Operations.splice(idx, 1);
     },
     onAdd: (tape) => {
-      tape.sequence.push({type: 'selectCard', args: []})
+      tape.Operations.push({type: 'selectCard', args: []})
     }
   }
 }

@@ -8,7 +8,8 @@
   "private": true,
   "scripts": {
     "start": "cross-env NODE_ENV=development babel-watch -x web server/index.js",
-    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
+    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
+    "seed": "babel-node server/seeders/20170221195238-read-ticket.js"
   },
   "dependencies": {
     "adbkit": "^2.7.0",

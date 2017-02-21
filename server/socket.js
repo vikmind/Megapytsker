@@ -2,7 +2,7 @@ function stepReporterFactory(socket, current){
   socket.emit('executing', current.name);
 }
 
-export default function socketConnectionCallback({operationsExecutor, port, device, selectCard}, socket){
+export default function socketConnectionCallback({operationsExecutor, port, device, selectCard, db}, socket){
   console.log(socket.id, 'connected!');
   const stepReporter = stepReporterFactory.bind(null, socket);
 
@@ -32,13 +32,17 @@ export default function socketConnectionCallback({operationsExecutor, port, devi
   });
 
   // Init
-  const tapes = require('../tapes');
-  socket.emit('init', {
-    status: {
-      arduino: port.isOpen(),
-      famoco: !!device,
-      server: true
-    },
-    tapes: Object.keys(tapes).map((key,i) => Object.assign({}, tapes[key], {id: ++i}))
+  db.Tape.findAll({
+    include: [db.Operation],
+    order: [[db.Operation, 'id' ]]
+  }).then(tapes => {
+    socket.emit('init', {
+      status: {
+        arduino: port.isOpen(),
+        famoco: !!device,
+        server: true
+      },
+      tapes
+    });
   });
 };

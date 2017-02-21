@@ -9,6 +9,7 @@ import waitFactory from './actions/wait';
 import operationsExecutorFactory from './actions/operationsExecutor';
 
 import socketConnectionCallback from './socket.js';
+import db from './models/';
 
 // Web part
 const express = require('express');
@@ -47,6 +48,7 @@ client.listDevices()
         operationsExecutor,
         port,
         device,
+        db,
         selectCard: operations.selectCard
       }
     ));
