@@ -7,6 +7,7 @@ import selectCardFactory from './actions/selectCard';
 import touchScreenFactory from './actions/touchScreen';
 import waitFactory from './actions/wait';
 import operationsExecutorFactory from './actions/operationsExecutor';
+import tapeExecutorFactory from './actions/tapeExecutor';
 
 import socketConnectionCallback from './socket.js';
 import db from './models/';
@@ -35,14 +36,13 @@ let operations = {
   selectCard: selectCardFactory({port, cards: config.cards, sleep}),
   wait: waitFactory({sleep})
 };
-let operationsExecutor = null;
-
 const client = adb.createClient();
 client.listDevices()
   .then(function(devices){
     const device = devices[0];
     operations.touchScreen = touchScreenFactory({client, device, sleep});
-    operationsExecutor = operationsExecutorFactory({operations});
+    operations.tapeExecutor = tapeExecutorFactory.bind({operations, db});
+    const operationsExecutor = operationsExecutorFactory({operations});
     io.on('connection', socketConnectionCallback.bind(null,
       {
         operationsExecutor,

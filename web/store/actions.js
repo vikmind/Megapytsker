@@ -6,7 +6,7 @@ export default function createActions(socket){
       socket.emit('card', {value: number});
     },
     executeSequence ({}, tape){
-      if (tape.sequence){
+      if (tape.Operations){
         socket.emit('execute', tape);
       } else {
         console.log('TODO:', tape.name);

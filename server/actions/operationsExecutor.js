@@ -1,3 +1,4 @@
+// Execute sequence of steps
 export function operationsExecutor({operations}, sequence, stepCallback){
   return sequence.reduce(
       function(prev, cur){

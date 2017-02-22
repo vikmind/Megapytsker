@@ -26,16 +26,13 @@ export default function socketConnectionCallback({operationsExecutor, port, devi
   socket.on('execute', function(data){
     console.log(`emit exection`);
     operationsExecutor(
-      data.sequence,
+      data.Operations,
       stepReporter
     ).then(()=> socket.emit('complete'));
   });
 
   // Init
-  db.Tape.findAll({
-    include: [db.Operation],
-    order: [[db.Operation, 'id' ]]
-  }).then(tapes => {
+  const initEmitter = (tapes) => {
     socket.emit('init', {
       status: {
         arduino: port.isOpen(),
@@ -44,5 +41,9 @@ export default function socketConnectionCallback({operationsExecutor, port, devi
       },
       tapes
     });
-  });
+  };
+  db.Tape.findAll({
+    include: [db.Operation],
+    order: [[db.Operation, 'id' ]]
+  }).then(initEmitter);
 };
