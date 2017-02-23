@@ -31,6 +31,13 @@ export default function socketConnectionCallback({operationsExecutor, port, devi
     ).then(()=> socket.emit('complete'));
   });
 
+  // Saving
+  socket.on('save_tape', function(tape){
+    console.log(`Saving tape`);
+    db.Tape.upsert(tape)
+        .then(isCreated => socket.emit('saved', `Tape created: ${isCreated}`));
+  });
+
   // Init
   const initEmitter = (tapes) => {
     socket.emit('init', {

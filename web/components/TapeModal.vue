@@ -61,7 +61,7 @@ export default {
       tape.Operations.splice(idx, 1);
     },
     onAdd: (tape) => {
-      tape.Operations.push({type: 'selectCard', args: []})
+      tape.Operations.push({tapeId: tape.id, type: 'selectCard', args: []})
     }
   }
 }
