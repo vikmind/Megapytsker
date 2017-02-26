@@ -36,6 +36,10 @@ socket.on('init', function(data){
 });
 socket.on('disconnect', function(){
   store.commit(types.UPDATE_STATUS, { server: false });
-})
+});
+socket.on('save_tape', function(data){
+  console.log('save_tape', data);
+  store.commit(types.UPDATE_TAPE, data);
+});
 
 export default store;

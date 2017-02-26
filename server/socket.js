@@ -34,8 +34,37 @@ export default function socketConnectionCallback({operationsExecutor, port, devi
   // Saving
   socket.on('save_tape', function(tape){
     console.log(`Saving tape`);
+    const operations = tape.Operations.map(item => {return {...item, id: undefined, TapeId: tape.id}});
     db.Tape.upsert(tape)
-        .then(isCreated => socket.emit('saved', `Tape created: ${isCreated}`));
+        .then(isCreated => {
+          db.Operation.destroy({where: {tapeId: tape.id}}).then(()=>{
+            db.Operation.bulkCreate(operations).then(
+              (items) => {
+                db.Tape.findAll({
+                  where: {id: tape.id},
+                  include: [db.Operation],
+                  order: [[db.Operation, 'id']]
+                }).then((tapes) => { socket.emit('save_tape', {tape: tapes[0], timestamp: tapes[0].id}) });
+              }
+            )
+          })
+        });
+  });
+  socket.on('add_tape', function({tape, timestamp}){
+    console.log(`Adding tape`);
+    db.Tape.create(tape).then(
+      (inserted) => {
+        const operations = tape.Operations.map(item => {return {...item, TapeId: inserted.id}});
+        db.Operation.bulkCreate(operations).then(
+          (items) => {
+            db.Tape.findAll({
+              where: {id: inserted.id},
+              include: [db.Operation],
+              order: [[db.Operation, 'id']]
+            }).then((tapes) => { socket.emit('save_tape', {tape: tapes[0], timestamp}) });
+          }
+        );
+    });
   });
 
   // Init

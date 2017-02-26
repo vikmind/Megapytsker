@@ -1,22 +1,27 @@
 <template lang="html">
   <div class="tapeslist">
-    <CardButton v-for="card in $store.state.cards" :card="card" />
+    <CardButton v-for="card in cards" :card="card" />
     <div class="tapeslist__delimeter"></div>
-    <Tape :tape="{id: 'UPLOAD', name: 'Upload'}" type="upload"/>
+    <!-- <Tape :tape="{id: 'UPLOAD', name: 'Upload'}" type="upload"/> -->
     <Tape :tape="{id: 'NEW', name: 'Create'}" type="create"/>
     <div class="tapeslist__delimeter"></div>
-    <Tape v-for="tape in $store.state.tapes" :tape="tape" type="file"/>
+    <Tape v-for="tape in tapes" :tape="tape" type="file"/>
   </div>
 </template>
 
 <script>
 import CardButton from './CardButton.vue';
 import Tape from './Tape.vue';
+import { mapState } from 'vuex';
 
 export default {
   components: {
     CardButton, Tape
-  }
+  },
+  computed: mapState([
+    'tapes',
+    'cards'
+  ])
 }
 </script>
 

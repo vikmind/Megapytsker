@@ -1,23 +1,23 @@
 <template lang="html">
   <div class="tapemodal">
     <div class="tapemodal__header">
-      <h1 v-if="$store.state.openedMode === 'view'" class="tapemodal__title">{{ tape.name }}</h1>
-      <input v-if="$store.state.openedMode === 'edit'" type="text" v-model="tape.name">
+      <h1 v-if="openedMode === 'view'" class="tapemodal__title">{{ tape.name }}</h1>
+      <input v-if="openedMode === 'edit'" type="text" v-model="tape.name">
       <div class="tapemodal__actions">
         <button @click="executeSequence(tape)">Execute</button>
-        <button v-if="$store.state.openedMode === 'view'" @click="editTape(tape.id)">Edit</button>
+        <button v-if="openedMode === 'view'" @click="editTape(tape.id)">Edit</button>
         <button v-else @click="saveTape(tape)">Save</button>
         <button @click="closeTape()">X</button>
       </div>
     </div>
     <div class="tapemodal__body">
-      <div v-if="$store.state.openedMode === 'view'" class="operations-list">
+      <div v-if="openedMode === 'view'" class="operations-list">
         <Operation
             :operation="operation"
             v-for="operation in tape.Operations"
           />
       </div>
-      <div v-if="$store.state.openedMode === 'edit'" class="operations-list">
+      <div v-if="openedMode === 'edit'" class="operations-list">
         <OperationEdit
             :operation="operation"
             v-for="(operation,idx) in tape.Operations"
@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters, mapState } from 'vuex';
 import Operation from './Operation.vue';
 import OperationEdit from './OperationEdit.vue';
 export default {
@@ -43,11 +43,26 @@ export default {
     Operation,
     OperationEdit
   },
+  computed: {
+    ...mapState([
+      'openedMode',
+      'openedTapeId'
+    ])
+  },
   data (){
     // Deep clone is needed
-    const tape = this.$store.state.tapes.find(item => item.id === this.$store.state.openedTapeId);
+    const tape = (this.$store.state.openedTapeId === 'NEW')
+      ? {id: 'NEW', name: 'NEW TAPE', Operations: []}
+      : this.$store.state.tapes.find(item => item.id === this.$store.state.openedTapeId);
     return {
       tape: JSON.parse(JSON.stringify(tape))
+    }
+  },
+  watch: {
+    openedTapeId: function(value){
+      const tape = this.$store.state.tapes.find(item => item.id === value);
+      console.log('watcher:', tape);
+      this.tape = JSON.parse(JSON.stringify(tape));
     }
   },
   methods: {

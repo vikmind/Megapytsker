@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="tape__wrapper">
-  <button class="tape" @click="openTape(tape.id)" :class="{'is-green' : (type == 'file')}">
+  <button class="tape" @click="(type == 'create') ? editTape(tape.id) : openTape(tape.id)" :class="{'is-green' : (type == 'file')}">
     <span v-if="(type == 'upload')"><img src="../img/icon-upload.svg" alt=""><br></span>
     <span v-if="(type == 'create')"><img src="../img/icon-add.svg" alt=""><br></span>
     <span>{{ tape.name  }}</span>
@@ -13,14 +13,12 @@ import { mapActions } from 'vuex'
 
 export default {
   props: ['type', 'tape'],
-  data (){
-    return {
-      opened: (this.type == 'create')
-    }
-  },
-  methods: mapActions([
-    'openTape'
-  ])
+  methods: {
+    ...mapActions([
+      'openTape',
+      'editTape'
+    ])
+  }
 }
 </script>
 
