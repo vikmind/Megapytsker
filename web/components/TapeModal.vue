@@ -7,6 +7,7 @@
         <button @click="executeSequence(tape)">Execute</button>
         <button v-if="openedMode === 'view'" @click="editTape(tape.id)">Edit</button>
         <button v-else @click="saveTape(tape)">Save</button>
+        <button @click="removeTape(tape.id)">Remove</button>
         <button @click="closeTape()">X</button>
       </div>
     </div>
@@ -70,6 +71,7 @@ export default {
       'closeTape',
       'editTape',
       'saveTape',
+      'removeTape',
       'executeSequence'
     ]),
     onDelete: (tape, idx) => {

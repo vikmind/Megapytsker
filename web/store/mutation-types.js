@@ -9,3 +9,4 @@ export const CLOSE_TAPE = `${ns}/CLOSE_TAPE`;
 export const SAVE_TAPE = `${ns}/SAVE_TAPE`;
 export const ADD_TAPE = `${ns}/ADD_TAPE`;
 export const UPDATE_TAPE = `${ns}/UPDATE_TAPE`;
+export const REMOVE_TAPE = `${ns}/REMOVE_TAPE`;

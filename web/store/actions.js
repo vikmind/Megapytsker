@@ -28,8 +28,13 @@ export default function createActions(socket){
         socket.emit('save_tape', tape);
       }
     },
-    closeTape ({commit, state}, tapeId){
+    closeTape ({commit, state}){
       commit(types.CLOSE_TAPE);
+    },
+    removeTape({commit, state}, tapeId){
+      commit(types.CLOSE_TAPE);
+      commit(types.REMOVE_TAPE, tapeId);
+      socket.emit('remove_tape', tapeId);
     }
   }
 }

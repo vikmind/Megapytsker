@@ -36,39 +36,55 @@ export default function socketConnectionCallback({operationsExecutor, port, devi
     console.log(`Saving tape`);
     const operations = tape.Operations.map(item => {return {...item, id: undefined, TapeId: tape.id}});
     db.Tape.upsert(tape)
-        .then(isCreated => {
-          db.Operation.destroy({where: {tapeId: tape.id}}).then(()=>{
-            db.Operation.bulkCreate(operations).then(
-              (items) => {
-                db.Tape.findAll({
-                  where: {id: tape.id},
-                  include: [db.Operation],
-                  order: [[db.Operation, 'id']]
-                }).then((tapes) => { socket.emit('save_tape', {tape: tapes[0], timestamp: tapes[0].id}) });
-              }
-            )
-          })
+      .then(isCreated => {
+        return db.Operation.destroy({where: {tapeId: tape.id}});
+      })
+      .then(()=>{
+        return db.Operation.bulkCreate(operations);
+      })
+      .then(items => {
+        return db.Tape.findAll({
+          where: {id: tape.id},
+          include: [db.Operation],
+          order: [[db.Operation, 'id']]
         });
+      })
+      .then(tapes => {
+        socket.emit('save_tape', {tape: tapes[0], timestamp: tapes[0].id})
+      });
   });
   socket.on('add_tape', function({tape, timestamp}){
     console.log(`Adding tape`);
-    db.Tape.create(tape).then(
-      (inserted) => {
-        const operations = tape.Operations.map(item => {return {...item, TapeId: inserted.id}});
-        db.Operation.bulkCreate(operations).then(
-          (items) => {
-            db.Tape.findAll({
-              where: {id: inserted.id},
-              include: [db.Operation],
-              order: [[db.Operation, 'id']]
-            }).then((tapes) => { socket.emit('save_tape', {tape: tapes[0], timestamp}) });
-          }
-        );
-    });
+    let insertedId = null;
+    db.Tape.create(tape)
+      .then(inserted => {
+        insertedId = inserted.id;
+        const operations = tape.Operations.map(item => {return {...item, TapeId: insertedId}});
+        return db.Operation.bulkCreate(operations);
+      })
+      .then(items => {
+        return db.Tape.findAll({
+          where: {id: insertedId},
+          include: [db.Operation],
+          order: [[db.Operation, 'id']]
+        });
+      })
+      .then(tapes => {
+        socket.emit('save_tape', {tape: tapes[0], timestamp})
+      });
+  });
+  socket.on('remove_tape', function(tapeId){
+    console.log(`Removing tape`);
+    db.Tape.destroy({
+      where: {id: tapeId}
+    }).then(count => { socket.emit('removed_tape', `count: ${count}`) });
   });
 
   // Init
-  const initEmitter = (tapes) => {
+  db.Tape.findAll({
+    include: [db.Operation],
+    order: [['id'], [db.Operation, 'id' ]]
+  }).then(tapes => {
     socket.emit('init', {
       status: {
         arduino: port.isOpen(),
@@ -77,9 +93,5 @@ export default function socketConnectionCallback({operationsExecutor, port, devi
       },
       tapes
     });
-  };
-  db.Tape.findAll({
-    include: [db.Operation],
-    order: [[db.Operation, 'id' ]]
-  }).then(initEmitter);
+  });
 };

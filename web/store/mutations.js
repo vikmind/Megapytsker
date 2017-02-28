@@ -36,5 +36,9 @@ export default {
   },
   [types.CLOSE_TAPE] (state) {
     state.openedTapeId = null;
+  },
+  [types.REMOVE_TAPE] (state, tapeId) {
+    const tapeIndx = state.tapes.findIndex(item => item.id === tapeId);
+    state.tapes = [...state.tapes.slice(0, tapeIndx), ...state.tapes.slice(tapeIndx + 1)];
   }
 };
