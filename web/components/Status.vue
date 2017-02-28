@@ -1,15 +1,20 @@
 <template lang="html">
   <span class="status__item"
         :class="{
-          'is-on': ($store.state.status[param] == true),
-          'is-off': ($store.state.status[param] == false)
+          'is-on': (status[param] == true),
+          'is-off': (status[param] == false)
         }">
     {{title}}
   </span>
 </template>
 
 <script>
+import { mapState } from 'vuex';
 export default {
+  computed:
+    mapState([
+      'status'
+    ]),
   props: ['title', 'param']
 }
 </script>

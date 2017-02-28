@@ -38,20 +38,20 @@ let operations = {
 };
 const client = adb.createClient();
 client.listDevices()
-  .then(function(devices){
-    const device = devices[0];
-    operations.touchScreen = touchScreenFactory({client, device, sleep});
-    operations.tapeExecutor = tapeExecutorFactory.bind({operations, db});
-    const operationsExecutor = operationsExecutorFactory({operations});
-    io.on('connection', socketConnectionCallback.bind(null,
-      {
-        operationsExecutor,
-        port,
-        device,
-        db,
-        selectCard: operations.selectCard
-      }
-    ));
+.then(function(devices){
+  const device = devices[0];
+  operations.touchScreen = touchScreenFactory({client, device, sleep});
+  operations.tapeExecutor = tapeExecutorFactory.bind({operations, db});
+  const operationsExecutor = operationsExecutorFactory({operations});
+  io.on('connection', socketConnectionCallback.bind(null,
+    {
+      operationsExecutor,
+      port,
+      device,
+      db,
+      selectCard: operations.selectCard
+    }
+  ));
 });
 
 // Web configuration

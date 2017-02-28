@@ -3,18 +3,22 @@
     <Topbar />
     <Tapeslist/>
     <transition name="modal-fade">
-      <TapeModal v-if="$store.state.openedTapeId"/>
+      <TapeModal v-if="openedTapeId"/>
     </transition>
   </div>
 </template>
 
 <script>
-
+import { mapState } from 'vuex';
 import Topbar from './Topbar.vue';
 import Tapeslist from './Tapeslist.vue';
 import TapeModal from './TapeModal.vue';
 
 export default {
+  computed:
+    mapState([
+      'openedTapeId'
+    ]),
   name: 'app',
   components: {
     Topbar, Tapeslist, TapeModal
