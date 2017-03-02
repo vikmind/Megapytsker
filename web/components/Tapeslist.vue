@@ -1,22 +1,23 @@
 <template lang="html">
   <div class="tapeslist">
+    <h1 class="tapeslist__title">Cards</h1>
     <CardButton v-for="card in cards" :card="card" />
+    <h1 class="tapeslist__title">Tapes</h1>
+    <!-- <TapeButton :tape="{id: 'UPLOAD', name: 'Upload'}" type="upload"/> -->
+    <TapeButton :tape="{id: 'NEW', name: 'Create'}" type="create"/>
     <div class="tapeslist__delimeter"></div>
-    <!-- <Tape :tape="{id: 'UPLOAD', name: 'Upload'}" type="upload"/> -->
-    <Tape :tape="{id: 'NEW', name: 'Create'}" type="create"/>
-    <div class="tapeslist__delimeter"></div>
-    <Tape v-for="tape in tapes" :tape="tape" type="file"/>
+    <TapeButton v-for="tape in tapes" :tape="tape" type="file"/>
   </div>
 </template>
 
 <script>
 import CardButton from './CardButton.vue';
-import Tape from './Tape.vue';
+import TapeButton from './TapeButton.vue';
 import { mapState } from 'vuex';
 
 export default {
   components: {
-    CardButton, Tape
+    CardButton, TapeButton
   },
   computed: mapState([
     'tapes',
@@ -33,8 +34,12 @@ export default {
   flex-wrap: wrap;
   align-items: flex-start;
 }
-.tapeslist__delimeter{
+.tapeslist__delimeter,
+.tapeslist__title{
   flex-grow: 1;
   flex-basis: 100%;
+}
+.tapeslist__title:first-child{
+  margin-top: 0;
 }
 </style>

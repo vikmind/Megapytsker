@@ -28,7 +28,9 @@
             class="operation"
             @click="onAdd(tape)"
           >
-          Add new
+          <div class="operation__content operation__content--centered">
+            Add new operation
+          </div>
         </button>
       </div>
     </div>

@@ -39,12 +39,13 @@ export default {
   width: 270px;
   height: 450px;
   padding: 15px;
-  background: #C2C2C2;
+  background: #424242;
   border: 1px solid #424242;
   border-radius: 5px;
   margin: 0 20px 20px 0;
 
   display: flex;
+  align-items: stretch;
   flex-direction: column;
 }
 .operation__content{
@@ -55,6 +56,12 @@ export default {
   box-shadow: 0 0 10px 0 #696969 inset;
   overflow-x: hidden;
   overflow-y: auto;
+}
+.operation__content--centered{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2em;
 }
 .operation__title{
   font-size: 1.2em;
