@@ -56,6 +56,7 @@ export default {
   box-shadow: 0 0 10px 0 #696969 inset;
   overflow-x: hidden;
   overflow-y: auto;
+  position: relative;
 }
 .operation__content--centered{
   display: flex;

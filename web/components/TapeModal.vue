@@ -4,11 +4,21 @@
       <h1 v-if="openedMode === 'view'" class="tapemodal__title">{{ tape.name }}</h1>
       <input v-if="openedMode === 'edit'" type="text" v-model="tape.name">
       <div class="tapemodal__actions">
-        <button @click="executeSequence(tape)">Execute</button>
-        <button v-if="openedMode === 'view'" @click="editTape(tape.id)">Edit</button>
-        <button v-else @click="saveTape(tape)">Save</button>
-        <button @click="removeTape(tape.id)">Remove</button>
-        <button @click="closeTape()">X</button>
+        <button @click="executeSequence(tape)" title="Execute">
+          <img src="https://icon.now.sh/play_circle_outline/32" alt="Execute">
+        </button>
+        <button v-if="openedMode === 'view'" @click="editTape(tape.id)">
+          <img src="https://icon.now.sh/edit/32" alt="Edit">
+        </button>
+        <button v-else @click="saveTape(tape)" title="Save">
+          <img src="https://icon.now.sh/save/32" alt="Save">
+        </button>
+        <button @click="removeTape(tape.id)">
+          <img src="https://icon.now.sh/delete_forever/32" alt="Remove">
+        </button>
+        <button @click="closeTape()">
+          <img src="https://icon.now.sh/clear/32" alt="Close">
+        </button>
       </div>
     </div>
     <div class="tapemodal__body">
