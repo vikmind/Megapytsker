@@ -68,7 +68,7 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="scss">
 .operation-edit{
   height: 450px;
 }

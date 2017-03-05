@@ -7,19 +7,24 @@
       </label>
       <div class="tapemodal__actions">
         <button class="button success" @click="executeSequence(tape)" title="Execute">
-          <Icon glyph="execute" width="32" height="32" />
+          <Icon glyph="execute" width="32" height="32" /><br>
+          Run
         </button>
         <button class="button" v-if="openedMode === 'view'" @click="editTape(tape.id)">
-          <Icon glyph="edit" width="32" height="32" />
+          <Icon glyph="edit" width="32" height="32" /><br>
+          Edit
         </button>
         <button class="button" v-else @click="saveTape(tape)" title="Save">
-          <Icon glyph="save" width="32" height="32" />
+          <Icon glyph="save" width="32" height="32" /><br>
+          Save
         </button>
         <button class="button alert" @click="removeTape(tape.id)">
-          <Icon glyph="trash" width="32" height="32" />
+          <Icon glyph="trash" width="32" height="32" /><br>
+          Remove
         </button>
         <button class="button secondary" @click="closeTape()">
-          <Icon glyph="close" width="32" height="32" />
+          <Icon glyph="close" width="32" height="32" /><br>
+          Close
         </button>
       </div>
     </div>
@@ -103,11 +108,11 @@ export default {
 <style lang="scss">
 .modal-fade-enter-active, .modal-fade-leave-active {
   transform: scale(1);
-  transition: opacity .5s, transform .5s;
+  transition: opacity .3s, transform .3s;
 }
 .modal-fade-enter, .modal-fade-leave-to, .modal-fade-leave-active {
   opacity: 0;
-  transform: scale(0.5);
+  transform: scale(0.7);
 }
 .tapemodal{
   position: fixed;
@@ -117,6 +122,7 @@ export default {
   right: 0;
   display: flex;
   flex-direction: column;
+  background: #F3F3F3;
 }
 .tapemodal__header{
   background: #607d8b;
@@ -135,30 +141,20 @@ export default {
     margin-bottom: 0;
   }
 }
+h1.tapemodal__title{
+  margin: 0;
+}
 .tapemodal__actions{
   display: flex;
   .button{
     margin: 0;
+    min-width: 80px;
+    font-size: 0.8rem;
     &:focus{
       outline: none;
       box-shadow: 0 0 1px 1px white inset;
     }
   }
-}
-@media only screen and (max-width:560px){
-  .tapemodal__header{
-    flex-direction: column;
-  }
-  .tapemodal__title{
-    align-self: stretch;
-    margin-bottom: 1em;
-  }
-  .tapemodal__actions{
-    align-self: flex-end;
-  }
-}
-h1.tapemodal__title{
-  margin: 0;
 }
 .tapemodal__body{
   background: #F3F3F3;
@@ -167,5 +163,24 @@ h1.tapemodal__title{
   overflow-y: scroll;
   padding: 18px 20px;
   min-height: calc(100% - 69px);
+}
+@media only screen and (max-width:560px){
+  .tapemodal{
+    overflow-y: scroll;
+  }
+  .tapemodal__header{
+    flex-direction: column;
+  }
+  .tapemodal__body{
+    flex: 1 1 auto;
+    overflow: visible;
+  }
+  .tapemodal__title{
+    align-self: stretch;
+    margin-bottom: 1em;
+  }
+  .tapemodal__actions{
+    align-self: flex-end;
+  }
 }
 </style>

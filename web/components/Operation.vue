@@ -15,21 +15,31 @@
           <strong>Y:</strong><span>{{ operation.args[1] }}</span>
         </div>
       </div>
-      <pre v-else>{{ JSON.stringify(operation, null, 2) }}</pre>
+      <div v-else class="operation__card">
+        <div v-for="argument in operation.args">
+          {{ argument }}
+        </div>
+      </div>
+      <pre v-if="false">{{ JSON.stringify(operation, null, 2) }}</pre>
     </div>
-    <div class="operation__actions">
+    <div class="operation__actions operation__actions--static">
+      <div class="operation__action-button">
+        <Icon :glyph="operation.type || 'grid'" width="32" height="32" />
+      </div>
       <div class="operation__bottom-title" v-html="operation.name"></div>
     </div>
   </div>
 </template>
 
 <script>
+import Icon from './Icon.vue';
 export default {
+  components: { Icon },
   props: ['operation'],
 }
 </script>
 
-<style lang="css">
+<style lang="scss">
 .operations-list{
   display: flex;
   flex-wrap: wrap;
@@ -91,8 +101,13 @@ export default {
   align-items: center;
   justify-content: space-around;
 }
+.operation__actions--static{
+  justify-content: flex-start;
+  &>*:first-child {
+    margin-right: 1em;
+  }
+}
 .operation__bottom-title{
   color: #fefefe;
-  text-align: center;
 }
 </style>
