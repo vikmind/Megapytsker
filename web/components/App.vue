@@ -26,7 +26,13 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+@import 'variables';
+@import 'foundation-settings';
+@import '../../node_modules/foundation-sites/scss/foundation';
+@include foundation-global-styles;
+@include foundation-forms;
+@include foundation-button;
 html,body{
   padding: 0;
   margin: 0;
@@ -39,8 +45,8 @@ html,body{
   box-sizing: inherit;
 }
 #app {
-  font-family: "Source Sans Pro", Helvetica, Arial, sans-serif;
-  color: #2c3e50;
+  color: $text-color;
+  line-height: 1.3;
   overflow: hidden;
   overflow-y: scroll;
   height: 100%;
@@ -58,6 +64,6 @@ li{
 }
 
 a {
-  color: #42b983;
+  color: $link-color;
 }
 </style>

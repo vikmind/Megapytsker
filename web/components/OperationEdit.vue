@@ -6,28 +6,31 @@
       <input type="text" v-model="operation.name">
     </div>
     <div v-for="type in operationTypes" v-if="type.identifier === operation.type">
+      <div v-if="type.identifier === 'touchScreen'">
+        Touch Screen select
+      </div>
       <div class="edit-form__line" v-for="(arg,i) in type.arguments">
-        <label>{{ arg.name }}</label>
-        <input type="text" v-if="arg.type === 'String'" v-model="operation.args[i]">
-        <input type="number" v-if="arg.type === 'Integer'" v-model="operation.args[i]">
-        <select v-if="arg.type === 'Cards'" v-model="operation.args[i]">
-          <option v-for="card in cards" :value="card">{{ card }}</option>
-        </select>
+        <label>{{ arg.name }}
+          <input type="text" v-if="arg.type === 'String'" v-model="operation.args[i]">
+          <input type="number" v-if="arg.type === 'Integer'" v-model="operation.args[i]">
+          <select v-if="arg.type === 'Cards'" v-model="operation.args[i]">
+            <option v-for="card in cards" :value="card">{{ card }}</option>
+          </select>
+        </label>
       </div>
     </div>
-    <div v-if="typePopup" class="operation__select-type">
-      <div v-for="type in operationTypes" @click="operation.type = type.identifier; typePopup = false">
-        <img :src="typeIcons[type.identifier]"/>
-        <div>{{type.name}}</div>
-      </div>
-    </div>
+    <OperationTypeSelect
+      v-if="typePopup || (operation.type == null)"
+      :value="operation.type"
+      @input="selectType"
+    />
   </div>
   <div class="operation__actions">
     <button class="operation__action-button" @click="togglePopup">
-      <img src="https://icon.now.sh/grid/32/fefefe" alt="">
+      <Icon :glyph="operation.type || 'grid'" width="32" height="32" />
     </button>
     <button class="operation__action-button" @click="$emit('delete')">
-      <img src="https://icon.now.sh/trash/32/fefefe" alt="">
+      <Icon glyph="trash" width="32" height="32" />
     </button>
   </div>
 </div>
@@ -35,11 +38,10 @@
 
 <script>
 import { mapState } from 'vuex';
-import inputText from '../img/inputText.svg';
-import selectCard from '../img/selectCard.svg';
-import touchScreen from '../img/touchScreen.svg';
-import wait from '../img/wait.svg';
+import Icon from './Icon.vue';
+import OperationTypeSelect from './OperationTypeSelect.vue';
 export default {
+  components: { Icon, OperationTypeSelect },
   computed:
     mapState([
       'operationTypes',
@@ -48,52 +50,30 @@ export default {
   props: ['operation'],
   data (){
     return {
-      typePopup: false,
-      typeIcons: {
-        inputText,
-        selectCard,
-        touchScreen,
-        wait
-      }
+      typePopup: false
     }
   },
   methods: {
-    togglePopup (){
+    togglePopup() {
       this.typePopup = !this.typePopup;
+    },
+    selectType(value) {
+      this.operation.type = value;
+      this.typePopup = false;
+      if (!this.operation.name){
+        this.operation.name = this.operationTypes.find(item => item.identifier === value).name;
+      }
     }
   }
 }
 </script>
 
 <style lang="css">
-.operation-edit label{
-  display: block;
+.operation-edit{
+  height: 450px;
 }
 .edit-form{}
-.edit-form__line{
-  margin-bottom: .5em;
-}
 .operation__action-button{
-  background: none;
-  border: none;
-  padding: 0;
-}
-.operation__select-type{
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  background: green;
-  flex-direction: column;
-  text-align: center;
-}
-.operation__select-type>div{
-  margin: 1em;
-  cursor: pointer;
+  color: #fefefe;
 }
 </style>

@@ -1,25 +1,25 @@
 <template lang="html">
   <div class="operation">
     <div class="operation__content">
-      <h2 class="operation__title" v-html="operation.name"></h2>
       <div v-if="operation.type === 'selectCard'"
           class="operation__card">
           <span v-if="operation.args[0] !== 'INIT'">ARROWPASS<BR></span>
           {{ operation.args[0] }}
       </div>
-      <div v-else-if="operation.type === 'touchScreen'">
-        <div class="operation__card">
-          <div>
-            <strong>X:</strong><span>{{ operation.args[0] }}</span>
-          </div>
-          <div>
-            <strong>Y:</strong><span>{{ operation.args[1] }}</span>
-          </div>
+      <div v-else-if="operation.type === 'touchScreen'"
+          class="operation__card">
+        <div>
+          <strong>X:</strong><span>{{ operation.args[0] }}</span>
+        </div>
+        <div>
+          <strong>Y:</strong><span>{{ operation.args[1] }}</span>
         </div>
       </div>
       <pre v-else>{{ JSON.stringify(operation, null, 2) }}</pre>
     </div>
-    <div class="operation__actions"></div>
+    <div class="operation__actions">
+      <div class="operation__bottom-title" v-html="operation.name"></div>
+    </div>
   </div>
 </template>
 
@@ -37,7 +37,7 @@ export default {
 }
 .operation{
   width: 270px;
-  height: 450px;
+  height: 250px;
   padding: 15px;
   background: #424242;
   border: 1px solid #424242;
@@ -77,7 +77,7 @@ export default {
 
   display: flex;
   flex-direction: column;
-  margin: 20px 0;
+  margin: auto;
   width: 180px;
   height: 100px;
   align-items: center;
@@ -90,5 +90,9 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-around;
+}
+.operation__bottom-title{
+  color: #fefefe;
+  text-align: center;
 }
 </style>

@@ -1,8 +1,6 @@
 <template lang="html">
   <header class="topbar">
-    <img :src="logoUrl"
-        class="logo"
-        alt="Megapytsker">
+    <img class="logo" :src="require('!file-loader!../img/logo.svg')" alt="Мегапыцкер">
     <div class="status">
       <Status param="arduino" title="Arduino"/>
       <Status param="famoco" title="Device" />
@@ -13,15 +11,9 @@
 
 <script>
 import Status from './Status.vue';
-import logoUrl from '../img/logo.svg';
 
 export default {
-  components: { Status },
-  data (){
-    return {
-      logoUrl
-    }
-  }
+  components: { Status }
 }
 </script>
 

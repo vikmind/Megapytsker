@@ -1,8 +1,8 @@
 <template lang="html">
   <div class="tape__wrapper">
   <button class="tape" @click="(type == 'create') ? editTape(tape.id) : openTape(tape.id)" :class="{'is-green' : (type == 'file')}">
-    <span v-if="(type == 'upload')"><img src="../img/icon-upload.svg" alt=""><br></span>
-    <span v-if="(type == 'create')"><img src="../img/icon-add.svg" alt=""><br></span>
+    <span v-if="(type == 'upload')"><Icon glyph="icon-upload" width="50" height="50" /><br></span>
+    <span v-if="(type == 'create')"><Icon glyph="icon-add" width="50" height="50" /><br></span>
     <span>{{ tape.name  }}</span>
   </button>
   </div>
@@ -10,8 +10,10 @@
 
 <script>
 import { mapActions } from 'vuex'
+import Icon from './Icon.vue';
 
 export default {
+  components: { Icon },
   props: ['type', 'tape'],
   methods: {
     ...mapActions([
