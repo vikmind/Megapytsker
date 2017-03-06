@@ -33,6 +33,7 @@ export default {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
+  counter-reset: card-button;
 }
 .tapeslist__delimeter,
 .tapeslist__title{

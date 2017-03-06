@@ -8,6 +8,7 @@ import touchScreenFactory from './actions/touchScreen';
 import waitFactory from './actions/wait';
 import operationsExecutorFactory from './actions/operationsExecutor';
 import tapeExecutorFactory from './actions/tapeExecutor';
+import inputTextFactory from './actions/inputText';
 
 import socketConnectionCallback from './socket.js';
 import db from './models/';
@@ -41,7 +42,8 @@ client.listDevices()
 .then(function(devices){
   const device = devices[0];
   operations.touchScreen = touchScreenFactory({client, device, sleep});
-  operations.tapeExecutor = tapeExecutorFactory.bind({operations, db});
+  operations.inputText = inputTextFactory({client, device, sleep});
+  operations.tapeExecutor = tapeExecutorFactory({operations, db});
   const operationsExecutor = operationsExecutorFactory({operations});
   io.on('connection', socketConnectionCallback.bind(null,
     {

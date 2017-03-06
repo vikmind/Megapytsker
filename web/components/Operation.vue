@@ -15,6 +15,12 @@
           <strong>Y:</strong><span>{{ operation.args[1] }}</span>
         </div>
       </div>
+      <div v-else-if="operation.type === 'tapeExecutor'" class="operation__card">
+        <strong>{{tapes.find(item => item.id === parseInt(operation.args[0], 10)).name}}</strong>
+        <div>x
+          <strong>{{ operation.args[1] }}</strong>
+        </div>
+      </div>
       <div v-else class="operation__card">
         <div v-for="argument in operation.args">
           {{ argument }}
@@ -32,10 +38,15 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import Icon from './Icon.vue';
 export default {
   components: { Icon },
   props: ['operation'],
+  computed:
+    mapState([
+      'tapes'
+    ]),
 }
 </script>
 

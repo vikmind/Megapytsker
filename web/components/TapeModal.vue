@@ -123,6 +123,7 @@ export default {
   display: flex;
   flex-direction: column;
   background: #F3F3F3;
+  z-index: 100;
 }
 .tapemodal__header{
   background: #607d8b;

@@ -25,7 +25,10 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="scss">
+body{
+  counter-reset: card-button;
+}
 .card__wrapper{
   height: 100px;
   width: 160px;
@@ -33,6 +36,15 @@ export default {
   display: flex;
   flex: 1 0 160px;
   max-width: 160px;
+  position: relative;
+  &::before{
+    position: absolute;
+    z-index: 1;
+    counter-increment: card-button;
+    content: counter(card-button);
+    margin: 3px 5px;
+    font-size: .5em;
+  }
 }
 .card{
   flex: 1;

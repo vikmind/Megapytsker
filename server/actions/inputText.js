@@ -3,8 +3,8 @@ export function inputText({client, device, sleep}, text){
   if (!isStringAllowed) return Promise.reject(new Error('String unpermitted'));
   const createPromise = function(char){
     return client
-            .shell(device.id, `adb shell input keyevent "KEYCODE_${char}"`)
-            .then(() => sleep(100))
+            .shell(device.id, `input keyevent "KEYCODE_${char}"`)
+            .then(() => sleep(200))
             .catch( err => {
               console.error('Something went wrong:', err.stack);
             });
@@ -12,7 +12,12 @@ export function inputText({client, device, sleep}, text){
 
   return text.split("").reduce((prev, cur) => {
     return prev.then(result => createPromise(cur));
-  }, Promise.resolve()).then( result => true );
+  }, Promise.resolve())
+    .then( result => true )
+    .catch( err => {
+      console.error('Something went wrong:', err.stack);
+      throw new Error(`Something went wrong: ${err}`)
+    });
 };
 
 export default function inputTextFactory(deps){

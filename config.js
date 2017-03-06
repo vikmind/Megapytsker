@@ -1,5 +1,5 @@
 export default {
-  arduinoPort: '/dev/cu.usbmodem1411',
+  arduinoPort: '/dev/cu.usbmodem1A1221',
   webFolder: 'public',
   cards: [
     {
@@ -68,6 +68,20 @@ export default {
       arguments: [
         {
           name: 'Delay (ms)',
+          type: 'Integer'
+        }
+      ]
+    },
+    {
+      identifier: 'tapeExecutor',
+      name: 'Run other tape',
+      arguments: [
+        {
+          name: 'Tape to execute',
+          type: 'Integer'
+        },
+        {
+          name: 'Repeat count',
           type: 'Integer'
         }
       ]

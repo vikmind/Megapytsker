@@ -8,15 +8,17 @@ export function tapeExecutor({operations, db}, tapeId, numberOfTimes){
       order: [[db.Operation, 'id' ]]
     }
     ).then(tape => {
-      const array = new Array(parseInt(numberOfTimes, 10));
-      return array.reduce(
-        function(prev, cur){
-          return prev.then(result => {
-            return operationsExecutor({operations}, tape.Operations);
-          });
-        },
-        Promise.resolve()
-      );
+      const array = new Array(parseInt(numberOfTimes, 10) || 1);
+      return array.fill(0).reduce((prev, cur) => {
+        return prev.then(result => {
+          return operationsExecutor({operations}, tape.Operations);
+        });
+      },
+      Promise.resolve());
+    })
+    .catch( err => {
+      console.error('Something went wrong:', err.stack);
+      throw new Error(`Operation "${cur.type}" failed with ${err}`)
     });
 };
 

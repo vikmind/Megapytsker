@@ -85,6 +85,7 @@ export default function socketConnectionCallback({operationsExecutor, port, devi
   });
 
   // Init
+  selectCard('INIT');
   db.Tape.findAll({
     include: [db.Operation],
     order: [['id'], [db.Operation, 'id' ]]

@@ -9,7 +9,7 @@ var db        = {};
 var config = {
   "database": "megapytsker",
   "dialect": "sqlite",
-  "storage": `${__dirname}/../../tapes/db.sqlite`
+  "storage": `${__dirname}/../../db.sqlite`
 }
 
 var sequelize = new Sequelize(config.database, config.username, config.password, config);

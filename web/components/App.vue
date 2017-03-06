@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import Topbar from './Topbar.vue';
 import Tapeslist from './Tapeslist.vue';
 import TapeModal from './TapeModal.vue';
@@ -17,11 +17,34 @@ import TapeModal from './TapeModal.vue';
 export default {
   computed:
     mapState([
-      'openedTapeId'
+      'openedTapeId',
+      'cards'
     ]),
   name: 'app',
   components: {
     Topbar, Tapeslist, TapeModal
+  },
+  created() {
+    document.addEventListener('keydown', this.onKeyDown)
+  },
+  beforeDestroy() {
+    document.removeEventListener('keydown', this.onKeyDown)
+  },
+  methods: {
+    ...mapActions([
+      'selectCard',
+      'closeTape'
+    ]),
+    onKeyDown(e) {
+      switch (e.keyCode) {
+        case 49: if (!this.openedTapeId) this.selectCard(this.cards[0]); break;
+        case 50: if (!this.openedTapeId) this.selectCard(this.cards[1]); break;
+        case 51: if (!this.openedTapeId) this.selectCard(this.cards[2]); break;
+        case 52: if (!this.openedTapeId) this.selectCard(this.cards[3]); break;
+        case 53: if (!this.openedTapeId) this.selectCard(this.cards[4]); break;
+        case 27: this.closeTape(); break;
+      }
+    }
   }
 };
 </script>

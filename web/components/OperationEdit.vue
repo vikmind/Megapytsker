@@ -7,9 +7,30 @@
     </div>
     <div v-for="type in operationTypes" v-if="type.identifier === operation.type">
       <div v-if="type.identifier === 'touchScreen'">
-        Touch Screen select
+        <label>
+          X <input type="number" v-model="operation.args[0]">
+        </label>
+        <label>
+          Y <input type="number" v-model="operation.args[1]">
+        </label>
       </div>
-      <div class="edit-form__line" v-for="(arg,i) in type.arguments">
+      <div v-else-if="type.identifier === 'tapeExecutor'" >
+        <label>Tape to execute
+          <select v-model="operation.args[0]">
+            <option
+                v-if="tape.id !== openedTapeId"
+                v-for="tape in tapes"
+                :value="tape.id"
+            >
+              {{tape.name}}
+            </option>
+          </select>
+        </label>
+        <label> Count of repeats
+          <input placeholder="Minimum 1" type="number" v-model="operation.args[1]">
+        </label>
+      </div>
+      <div v-else class="edit-form__line" v-for="(arg,i) in type.arguments">
         <label>{{ arg.name }}
           <input type="text" v-if="arg.type === 'String'" v-model="operation.args[i]">
           <input type="number" v-if="arg.type === 'Integer'" v-model="operation.args[i]">
@@ -44,8 +65,10 @@ export default {
   components: { Icon, OperationTypeSelect },
   computed:
     mapState([
+      'openedTapeId',
       'operationTypes',
-      'cards'
+      'cards',
+      'tapes'
     ]),
   props: ['operation'],
   data (){

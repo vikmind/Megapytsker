@@ -38,9 +38,11 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
+
   display: flex;
   background: #ADF8B9;
   flex-direction: column;
+
   text-align: center;
   box-shadow: 0 0 10px 0 #696969 inset;
   color: #1F1F1F;
@@ -48,12 +50,15 @@ export default {
 .title{
   margin: 0;
   padding: 10px 0;
+  align-self: stretch;
 }
 .grid{
   align-items: center;
-  justify-content: space-around;
+  justify-content: flex-start;
+  display: flex;
   flex-wrap: wrap;
   flex-grow: 1;
+  flex-direction: column;
 }
 .item{
   margin: 1em 0;
