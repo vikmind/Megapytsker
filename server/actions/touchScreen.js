@@ -1,7 +1,8 @@
-export function touchScreen({client, device, sleep}, x, y){
+export function touchScreen({client, device, sleep}, x, y, time){
   if (!!device){
+    const sleepTime = parseInt(time, 10) || 200;
     return client.shell(device.id, `input tap ${x} ${y}`)
-            .then(() => sleep(2000))
+            .then(() => sleep(sleepTime))
             .then(() => true)
             .catch( err => {
               console.error('Something went wrong:', err.stack);

@@ -6,7 +6,7 @@
         <input type="text" v-model="tape.name">
       </label>
       <div class="tapemodal__actions">
-        <button class="button success" @click="executeSequence(tape)" title="Execute">
+        <button class="button success" v-if="openedMode === 'view'" @click="executeSequence(tape)" title="Execute">
           <Icon glyph="execute" width="32" height="32" /><br>
           Run
         </button>

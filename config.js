@@ -49,6 +49,40 @@ export default {
         {
           name: 'Y',
           type: 'Integer'
+        },
+        {
+          name: 'Delay (ms)',
+          type: 'Integer'
+        }
+      ]
+    },
+    {
+      identifier: 'swipe',
+      name: 'Swipe',
+      arguments: [
+        {
+          name: 'X1',
+          type: 'Integer'
+        },
+        {
+          name: 'Y1',
+          type: 'Integer'
+        },
+        {
+          name: 'X2',
+          type: 'Integer'
+        },
+        {
+          name: 'Y2',
+          type: 'Integer'
+        },
+        {
+          name: 'Duration (ms)',
+          type: 'Integer'
+        },
+        {
+          name: 'Delay (ms)',
+          type: 'Integer'
         }
       ]
     },

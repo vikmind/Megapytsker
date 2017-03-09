@@ -16,7 +16,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import Icon from './Icon.vue';
+import Icon from '../Icon.vue';
 export default {
   components: {
     Icon

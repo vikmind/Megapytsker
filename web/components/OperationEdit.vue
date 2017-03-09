@@ -6,14 +6,16 @@
       <input type="text" v-model="operation.name">
     </div>
     <div v-for="type in operationTypes" v-if="type.identifier === operation.type">
-      <div v-if="type.identifier === 'touchScreen'">
-        <label>
-          X <input type="number" v-model="operation.args[0]">
-        </label>
-        <label>
-          Y <input type="number" v-model="operation.args[1]">
-        </label>
-      </div>
+      <TouchScreenInput
+        v-if="type.identifier === 'touchScreen'"
+        :args="operation.args"
+        v-on:select="argsUpdate"
+      />
+      <SwipeInput
+        v-else-if="type.identifier === 'swipe'"
+        :args="operation.args"
+        v-on:select="argsUpdate"
+      />
       <div v-else-if="type.identifier === 'tapeExecutor'" >
         <label>Tape to execute
           <select v-model="operation.args[0]">
@@ -40,7 +42,7 @@
         </label>
       </div>
     </div>
-    <OperationTypeSelect
+    <TypeSelect
       v-if="typePopup || (operation.type == null)"
       :value="operation.type"
       @input="selectType"
@@ -60,9 +62,17 @@
 <script>
 import { mapState } from 'vuex';
 import Icon from './Icon.vue';
-import OperationTypeSelect from './OperationTypeSelect.vue';
+import TypeSelect from './operation-edit/TypeSelect.vue';
+import TouchScreenInput from './operation-edit/TouchScreen.vue';
+import SwipeInput from './operation-edit/Swipe.vue';
+
 export default {
-  components: { Icon, OperationTypeSelect },
+  components: {
+    Icon,
+    TypeSelect,
+    TouchScreenInput,
+    SwipeInput
+  },
   computed:
     mapState([
       'openedTapeId',
@@ -82,10 +92,14 @@ export default {
     },
     selectType(value) {
       this.operation.type = value;
+      this.operation.args = [];
       this.typePopup = false;
       if (!this.operation.name){
         this.operation.name = this.operationTypes.find(item => item.identifier === value).name;
       }
+    },
+    argsUpdate(args){
+      this.operation.args = args;
     }
   }
 }
@@ -93,7 +107,7 @@ export default {
 
 <style lang="scss">
 .operation-edit{
-  height: 450px;
+  height: 443px;
 }
 .edit-form{}
 .operation__action-button{

@@ -5,6 +5,7 @@ import adb from 'adbkit';
 
 import selectCardFactory from './actions/selectCard';
 import touchScreenFactory from './actions/touchScreen';
+import swipeFactory from './actions/swipe';
 import waitFactory from './actions/wait';
 import operationsExecutorFactory from './actions/operationsExecutor';
 import tapeExecutorFactory from './actions/tapeExecutor';
@@ -42,6 +43,7 @@ client.listDevices()
 .then(function(devices){
   const device = devices[0];
   operations.touchScreen = touchScreenFactory({client, device, sleep});
+  operations.swipe = swipeFactory({client, device, sleep});
   operations.inputText = inputTextFactory({client, device, sleep});
   operations.tapeExecutor = tapeExecutorFactory({operations, db});
   const operationsExecutor = operationsExecutorFactory({operations});
@@ -50,6 +52,7 @@ client.listDevices()
       operationsExecutor,
       port,
       device,
+      client,
       db,
       selectCard: operations.selectCard
     }

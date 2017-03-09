@@ -6,8 +6,7 @@ import createActions from './actions.js';
 import getters from './getters.js';
 import mutations from './mutations.js';
 
-import io from 'socket.io-client';
-const socket = io();
+import socket from './socket';
 
 Vue.use(Vuex);
 

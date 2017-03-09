@@ -1,22 +1,60 @@
 <template lang="html">
   <div class="operation">
     <div class="operation__content">
-      <div v-if="operation.type === 'selectCard'"
-          class="operation__card">
-          <span v-if="operation.args[0] !== 'INIT'">ARROWPASS<BR></span>
-          {{ operation.args[0] }}
+      <div v-if="operation.type === 'selectCard'">
+          <div class="operation__card">
+            <span v-if="operation.args[0] !== 'INIT'">ARROWPASS<BR></span>
+            <span>{{ operation.args[0] }}</span>
+          </div>
+          <div class="operation__info">
+            <Icon glyph="wait" width="18" height="18"/>
+            <span>{{ parseInt(operation.args[1], 10) || 1000 }}ms</span>
+          </div>
       </div>
-      <div v-else-if="operation.type === 'touchScreen'"
-          class="operation__card">
-        <div>
-          <strong>X:</strong><span>{{ operation.args[0] }}</span>
+      <div v-else-if="operation.type === 'touchScreen'">
+        <div class="operation__card">
+          <div>
+            <strong>X:</strong><span>{{ operation.args[0] }}</span>
+          </div>
+          <div>
+            <strong>Y:</strong><span>{{ operation.args[1] }}</span>
+          </div>
         </div>
-        <div>
-          <strong>Y:</strong><span>{{ operation.args[1] }}</span>
+        <div class="operation__info">
+          <Icon glyph="wait" width="18" height="18"/>
+          <span>{{ parseInt(operation.args[2], 10) || 200 }}ms</span>
+        </div>
+      </div>
+      <div v-else-if="operation.type === 'swipe'">
+        <div class="operation__card">
+          <table>
+            <tr>
+              <th>X1</th>
+              <td>{{ operation.args[0] }}</td>
+              <th>Y1</th>
+              <td>{{ operation.args[1] }}</td>
+            </tr>
+            <tr>
+              <th>X2</th>
+              <td>{{ operation.args[2] }}</td>
+              <th>Y2</th>
+              <td>{{ operation.args[3] }}</td>
+            </tr>
+            <tr>
+              <td colspan="4">
+                <Icon glyph="wait" width="18" height="16"/>
+                <span>{{ parseInt(operation.args[4], 10) || 200 }}ms</span>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="operation__info">
+          <Icon glyph="wait" width="18" height="18"/>
+          <span>{{ parseInt(operation.args[4], 10) || 200 }}ms</span>
         </div>
       </div>
       <div v-else-if="operation.type === 'tapeExecutor'" class="operation__card">
-        <strong>{{tapes.find(item => item.id === parseInt(operation.args[0], 10)).name}}</strong>
+        <strong>{{tapeName}}</strong>
         <div>x
           <strong>{{ operation.args[1] }}</strong>
         </div>
@@ -47,6 +85,16 @@ export default {
     mapState([
       'tapes'
     ]),
+  data(){
+    let tapeName = "Error, tape not found";
+    if (this.operation.type === 'tapeExecutor'){
+      const tape = this.$store.state.tapes.find(item => item.id === parseInt(this.operation.args[0], 10));
+      tapeName = tape ? tape.name : tapeName;
+    }
+    return {
+      tapeName
+    }
+  }
 }
 </script>
 
@@ -58,7 +106,7 @@ export default {
 }
 .operation{
   width: 270px;
-  height: 250px;
+  height: 270px;
   padding: 15px;
   background: #424242;
   border: 1px solid #424242;
@@ -104,6 +152,16 @@ export default {
   align-items: center;
   justify-content: center;
   text-align: center;
+  svg{
+    vertical-align: middle;
+  }
+}
+.operation__info{
+  text-align: center;
+  margin: 0.5rem 0 0;
+  svg{
+    vertical-align: middle;
+  }
 }
 .operation__actions{
   height: 40px;

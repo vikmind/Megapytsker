@@ -2,7 +2,7 @@ function stepReporterFactory(socket, current){
   socket.emit('executing', current.name);
 }
 
-export default function socketConnectionCallback({operationsExecutor, port, device, selectCard, db}, socket){
+export default function socketConnectionCallback({operationsExecutor, port, device, client, selectCard, db}, socket){
   console.log(socket.id, 'connected!');
   const stepReporter = stepReporterFactory.bind(null, socket);
 
@@ -20,6 +20,19 @@ export default function socketConnectionCallback({operationsExecutor, port, devi
     selectCard(data.value)
     .then(()=>socket.emit('servo_success'))
     .catch(()=>socket.emit('servo_failed'));
+  });
+
+  // Screenshots
+  socket.on('get_screen', function(timestamp){
+    client.screencap(device.id)
+    .then(stream => {
+      stream.pipe(require('fs').createWriteStream('./public/screenshot.png'));
+      stream.on('end', streamEnd => socket.emit('screenshot', {timestamp, path: './screenshot.png'}));
+    })
+    .catch( err => {
+      console.error('Something went wrong:', err.stack);
+      throw new Error(`Something went wrong: ${err}`)
+    });
   });
 
   // Execution
