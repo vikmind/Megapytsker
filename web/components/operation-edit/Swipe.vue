@@ -50,7 +50,7 @@ export default {
   beforeDestroy (){
     socket.off('screenshot');
   },
-  props: ['args'],
+  props: ['args', 'argsInfo'],
   data(){
     return {
       proportion: 1,
@@ -58,14 +58,15 @@ export default {
       y1: this.args[1] || 0,
       x2: this.args[2] || 0,
       y2: this.args[3] || 0,
-      duration: parseInt(this.args[4], 10) || 500,
-      delay: parseInt(this.args[5], 10) || 500,
+      duration: parseInt(this.args[4], 10) || this.argsInfo[4].default,
+      delay: parseInt(this.args[5], 10) || this.argsInfo[5].default,
       timestamp: null,
       opened: false
     }
   },
   mounted (){
     this.proportion = (this.$el.querySelector('.filler').clientWidth) / 320;
+    this.input();
   },
   computed: {
     dotX1(){ return this.x1 * this.proportion | 0; },

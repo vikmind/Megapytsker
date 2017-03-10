@@ -9,38 +9,28 @@
       <TouchScreenInput
         v-if="type.identifier === 'touchScreen'"
         :args="operation.args"
+        :argsInfo="type.arguments"
         v-on:select="argsUpdate"
       />
       <SwipeInput
         v-else-if="type.identifier === 'swipe'"
         :args="operation.args"
+        :argsInfo="type.arguments"
         v-on:select="argsUpdate"
       />
-      <div v-else-if="type.identifier === 'tapeExecutor'" >
-        <label>Tape to execute
-          <select v-model="operation.args[0]">
-            <option
-                v-if="tape.id !== openedTapeId"
-                v-for="tape in tapes"
-                :value="tape.id"
-            >
-              {{tape.name}}
-            </option>
-          </select>
-        </label>
-        <label> Count of repeats
-          <input placeholder="Minimum 1" type="number" v-model="operation.args[1]">
-        </label>
-      </div>
-      <div v-else class="edit-form__line" v-for="(arg,i) in type.arguments">
-        <label>{{ arg.name }}
-          <input type="text" v-if="arg.type === 'String'" v-model="operation.args[i]">
-          <input type="number" v-if="arg.type === 'Integer'" v-model="operation.args[i]">
-          <select v-if="arg.type === 'Cards'" v-model="operation.args[i]">
-            <option v-for="card in cards" :value="card">{{ card }}</option>
-          </select>
-        </label>
-      </div>
+      <TapeExecutorInput
+        v-else-if="type.identifier === 'tapeExecutor'"
+        :tapes="tapes.filter(item => item.id !== openedTapeId)"
+        :args="operation.args"
+        :argsInfo="type.arguments"
+        v-on:select="argsUpdate"
+      />
+      <GenericInput
+        v-else
+        :args="operation.args"
+        :argsInfo="type.arguments"
+        v-on:select="argsUpdate"
+      />
     </div>
     <TypeSelect
       v-if="typePopup || (operation.type == null)"
@@ -65,13 +55,17 @@ import Icon from './Icon.vue';
 import TypeSelect from './operation-edit/TypeSelect.vue';
 import TouchScreenInput from './operation-edit/TouchScreen.vue';
 import SwipeInput from './operation-edit/Swipe.vue';
+import TapeExecutorInput from './operation-edit/TapeExecutor.vue';
+import GenericInput from './operation-edit/GenericType.vue';
 
 export default {
   components: {
     Icon,
     TypeSelect,
     TouchScreenInput,
-    SwipeInput
+    SwipeInput,
+    TapeExecutorInput,
+    GenericInput
   },
   computed:
     mapState([

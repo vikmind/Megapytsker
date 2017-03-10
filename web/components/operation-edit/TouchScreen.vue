@@ -31,19 +31,20 @@ export default {
   beforeDestroy (){
     socket.off('screenshot');
   },
-  props: ['args'],
+  props: ['args', 'argsInfo'],
   data(){
     return {
       proportion: 1,
       x: this.args[0] || 0,
       y: this.args[1] || 0,
-      delay: this.args[2] || 300,
+      delay: this.args[2] || this.argsInfo[2].default,
       timestamp: null,
       opened: false
     }
   },
   mounted (){
     this.proportion = (this.$el.querySelector('.filler').clientWidth) / 320;
+    this.$emit('select', [this.x, this.y, this.delay]);
   },
   computed: {
     dotX(){

@@ -30,11 +30,13 @@ export default {
       arguments: [
         {
           name: 'ArrowPass ID',
-          type: 'Cards'
+          type: 'Cards',
+          default: 'INIT'
         },
         {
           name: 'Delay (ms)',
-          type: 'Integer'
+          type: 'Integer',
+          default: 1000
         }
       ]
     },
@@ -52,7 +54,8 @@ export default {
         },
         {
           name: 'Delay (ms)',
-          type: 'Integer'
+          type: 'Integer',
+          default: 500
         }
       ]
     },
@@ -78,11 +81,13 @@ export default {
         },
         {
           name: 'Duration (ms)',
-          type: 'Integer'
+          type: 'Integer',
+          default: 500
         },
         {
           name: 'Delay (ms)',
-          type: 'Integer'
+          type: 'Integer',
+          default: 500
         }
       ]
     },
@@ -93,6 +98,11 @@ export default {
         {
           name: 'Text or keycode (KEYCODE_BACK)',
           type: 'String'
+        },
+        {
+          name: 'Delay (ms)',
+          type: 'Integer',
+          default: 500
         }
       ]
     },
@@ -102,7 +112,8 @@ export default {
       arguments: [
         {
           name: 'Delay (ms)',
-          type: 'Integer'
+          type: 'Integer',
+          default: 2000
         }
       ]
     },
@@ -116,7 +127,8 @@ export default {
         },
         {
           name: 'Repeat count',
-          type: 'Integer'
+          type: 'Integer',
+          default: 1
         }
       ]
     }
