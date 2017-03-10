@@ -91,7 +91,7 @@ export default {
       name: 'Input Text',
       arguments: [
         {
-          name: 'Text',
+          name: 'Text or keycode (KEYCODE_BACK)',
           type: 'String'
         }
       ]

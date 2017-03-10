@@ -4,7 +4,7 @@ export function selectCard({port, cards, sleep}, number, time){
   if (!card) return Promise.resolve(false);
   if (port.isOpen()){
     port.write(card.angle + 'T');
-    return sleep(sleepTime)
+    return sleep(1000 + sleepTime)
             .then(result => true);
   } else {
     return Promise.reject(new Error('Arduino not connected'));

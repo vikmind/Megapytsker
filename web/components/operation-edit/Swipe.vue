@@ -75,12 +75,12 @@ export default {
   },
   methods: {
     mouseDown(e){
-      this.x1 = (e.offsetX + e.target.offsetLeft) / this.proportion | 0;
-      this.y1 = (e.offsetY + e.target.offsetTop ) / this.proportion | 0;
+      this.x1 = e.offsetX / this.proportion | 0;
+      this.y1 = e.offsetY / this.proportion | 0;
     },
     mouseUp(e){
-      this.x2 = (e.offsetX + e.target.offsetLeft) / this.proportion | 0;
-      this.y2 = (e.offsetY + e.target.offsetTop ) / this.proportion | 0;
+      this.x2 = e.offsetX / this.proportion | 0;
+      this.y2 = e.offsetY / this.proportion | 0;
       this.opened = false;
       this.input();
     },
@@ -121,10 +121,17 @@ export default {
   right: 0;
   background: white;
   cursor: pointer;
+  &::after{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+  }
   img{
     width: 100%;
     height: 100%;
-    pointer-events: none;
     user-select:none;
   }
 }

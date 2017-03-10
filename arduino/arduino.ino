@@ -2,6 +2,8 @@
 
 Servo myServo;
 int angle = 0;
+int newAngle = 0;
+int step = 1;
 String message;
 
 void setup() {
@@ -17,8 +19,13 @@ void loop() {
     if (isDigit(incomingChar)) {
       message += incomingChar;
     } else if (incomingChar == 'T') {
-      angle = constrain(message.toInt(), 0, 180);
-      myServo.write(angle);
+      newAngle = constrain(message.toInt(), 0, 180);
+      step = (newAngle > angle) ? 1 : -1;
+      while(newAngle != angle){
+        angle += step;
+        myServo.write(angle);
+        delay(8);
+      }
       message = "";
     }
   }

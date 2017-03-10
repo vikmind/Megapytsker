@@ -37,14 +37,6 @@ body{
   flex: 1 0 160px;
   max-width: 160px;
   position: relative;
-  &::before{
-    position: absolute;
-    z-index: 1;
-    counter-increment: card-button;
-    content: counter(card-button);
-    margin: 3px 5px;
-    font-size: .5em;
-  }
 }
 .card{
   flex: 1;
@@ -63,6 +55,16 @@ body{
   transform: translate(-2px, -2px);
   transition: box-shadow .2s, transform .2s;
   will-change: transform;
+  &::before{
+    position: absolute;
+    left: 3px;
+    top: 3px;
+    z-index: 1;
+    counter-increment: card-button;
+    content: counter(card-button);
+    margin: 3px 5px;
+    font-size: .5em;
+  }
 }
 .card:hover{
   box-shadow: 2px 3px 1px 0 #cfcfcf;

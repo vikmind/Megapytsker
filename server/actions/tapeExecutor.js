@@ -16,6 +16,7 @@ export function tapeExecutor({operations, db}, tapeId, numberOfTimes){
       },
       Promise.resolve());
     })
+    then(result => true)
     .catch( err => {
       console.error('Something went wrong:', err.stack);
       throw new Error(`Operation "${cur.type}" failed with ${err}`)
