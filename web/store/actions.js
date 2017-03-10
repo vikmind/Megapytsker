@@ -5,11 +5,10 @@ export default function createActions(socket){
     selectCard ({}, number){
       socket.emit('card', {value: number});
     },
-    executeSequence ({}, tape){
+    executeSequence ({commit}, tape){
       if (tape.Operations){
+        commit(types.RUN_TAPE);
         socket.emit('execute', tape);
-      } else {
-        console.log('TODO:', tape.name);
       }
     },
     openTape ({commit, state}, tapeId){

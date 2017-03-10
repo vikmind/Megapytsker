@@ -30,8 +30,7 @@ export default {
   width: 280px;
   margin: 0 20px 20px 0;
   display: flex;
-  flex: 1 0 240px;
-  max-width: 280px;
+  flex: 0 0 280px;
 }
 .tape{
   flex: 1;

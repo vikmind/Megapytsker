@@ -40,5 +40,14 @@ export default {
   [types.REMOVE_TAPE] (state, tapeId) {
     const tapeIndx = state.tapes.findIndex(item => item.id === tapeId);
     state.tapes = [...state.tapes.slice(0, tapeIndx), ...state.tapes.slice(tapeIndx + 1)];
+  },
+  [types.RUN_TAPE] (state){
+    state.openedMode = 'executing';
+  },
+  [types.END_RUN_TAPE] (state){
+    state.openedMode = 'view';
+  },
+  [types.RUN_OPERATION] (state, operationId){
+    state.currentOperationId = operationId;
   }
 };

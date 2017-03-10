@@ -1,10 +1,10 @@
 <template lang="html">
   <div class="tapemodal">
     <div class="tapemodal__header">
-      <h1 v-if="openedMode === 'view'" class="tapemodal__title">{{ tape.name }}</h1>
       <label v-if="openedMode === 'edit'" class="tapemodal__title">
         <input type="text" v-model="tape.name">
       </label>
+      <h1 v-else class="tapemodal__title">{{ tape.name }}</h1>
       <div class="tapemodal__actions">
         <button class="button success" v-if="openedMode === 'view'" @click="executeSequence(tape)" title="Execute">
           <Icon glyph="execute" width="32" height="32" /><br>
@@ -14,13 +14,13 @@
           <Icon glyph="edit" width="32" height="32" /><br>
           Edit
         </button>
-        <button class="button" v-else @click="saveTape(tape)" title="Save">
-          <Icon glyph="save" width="32" height="32" /><br>
-          Save
-        </button>
-        <button class="button alert" @click="removeTape(tape.id)">
+        <button class="button alert" v-if="openedMode === 'edit'" @click="removeTape(tape.id)">
           <Icon glyph="trash" width="32" height="32" /><br>
           Remove
+        </button>
+        <button class="button" v-if="openedMode === 'edit'" @click="saveTape(tape)" title="Save">
+          <Icon glyph="save" width="32" height="32" /><br>
+          Save
         </button>
         <button class="button secondary" @click="closeTape()">
           <Icon glyph="close" width="32" height="32" /><br>
@@ -29,12 +29,6 @@
       </div>
     </div>
     <div class="tapemodal__body">
-      <div v-if="openedMode === 'view'" class="operations-list">
-        <Operation
-            :operation="operation"
-            v-for="operation in tape.Operations"
-          />
-      </div>
       <div v-if="openedMode === 'edit'" class="operations-list">
         <OperationEdit
             :operation="operation"
@@ -49,6 +43,12 @@
             Add new operation
           </div>
         </button>
+      </div>
+      <div v-else class="operations-list">
+        <Operation
+            :operation="operation"
+            v-for="operation in tape.Operations"
+          />
       </div>
     </div>
   </div>

@@ -21,6 +21,7 @@ const store = new Vuex.Store({
     },
     tapes: [],
     openedTapeId: null,
+    currentOperationId: null,
     openedMode: 'view'
   },
   getters,
@@ -39,6 +40,13 @@ socket.on('disconnect', function(){
 socket.on('save_tape', function(data){
   console.log('save_tape', data);
   store.commit(types.UPDATE_TAPE, data);
+});
+socket.on('operation_id', function(operation){
+  store.commit(types.RUN_OPERATION, operation);
+});
+socket.on('complete', function(){
+  store.commit(types.RUN_OPERATION, null);
+  store.commit(types.END_RUN_TAPE);
 });
 
 export default store;

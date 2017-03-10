@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="operation">
-    <div class="operation__content">
+    <div class="operation__content" :class="{green: currentOperationId === operation.id}">
       <div v-if="operation.type === 'selectCard'">
           <div class="operation__card">
             <span v-if="operation.args[0] !== 'INIT'">ARROWPASS<BR></span>
@@ -67,7 +67,7 @@
       <pre v-if="false">{{ JSON.stringify(operation, null, 2) }}</pre>
     </div>
     <div class="operation__actions operation__actions--static">
-      <div class="operation__action-button">
+      <div class="operation__action-button" :class="{green: currentOperationId === operation.id}">
         <Icon :glyph="operation.type || 'grid'" width="32" height="32" />
       </div>
       <div class="operation__bottom-title" v-html="operation.name"></div>
@@ -83,7 +83,8 @@ export default {
   props: ['operation'],
   computed:
     mapState([
-      'tapes'
+      'tapes',
+      'currentOperationId'
     ]),
   data(){
     let tapeName = "Error, tape not found";
@@ -126,6 +127,10 @@ export default {
   overflow-x: hidden;
   overflow-y: auto;
   position: relative;
+  transition: background-color .2s;
+  &.green{
+    background-color: #88f797;
+  }
 }
 .operation__content--centered{
   display: flex;
@@ -169,6 +174,12 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-around;
+}
+.operation__action-button{
+  transition: color .2s;
+}
+.operation__action-button.green{
+  color: #3adb76;
 }
 .operation__actions--static{
   justify-content: flex-start;

@@ -1,5 +1,8 @@
-function stepReporterFactory(socket, current){
+export function stepReporterFactory(socket, current){
   socket.emit('executing', current.name);
+  if (current.id){
+    socket.emit('operation_id', current.id);
+  }
 }
 
 export default function socketConnectionCallback({operationsExecutor, port, device, client, selectCard, db}, socket){
@@ -42,7 +45,9 @@ export default function socketConnectionCallback({operationsExecutor, port, devi
       data.Operations,
       stepReporter
     )
-    .then(()=> socket.emit('complete'));
+    .then(()=> {
+      socket.emit('complete');
+    });
   });
 
   // Saving
