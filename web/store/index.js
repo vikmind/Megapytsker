@@ -30,7 +30,6 @@ const store = new Vuex.Store({
 });
 
 socket.on('init', function(data){
-  console.log('init data', data);
   store.commit(types.INIT_STATUS, data.status);
   store.commit(types.INIT_TAPES, data.tapes);
 });
@@ -38,7 +37,6 @@ socket.on('disconnect', function(){
   store.commit(types.UPDATE_STATUS, { server: false });
 });
 socket.on('save_tape', function(data){
-  console.log('save_tape', data);
   store.commit(types.UPDATE_TAPE, data);
 });
 socket.on('operation_id', function(operation){

@@ -21,6 +21,7 @@ import close from '../img/close.svg';
 import execute from '../img/execute.svg';
 import save from '../img/save.svg';
 import edit from '../img/edit.svg';
+import move from '../img/move.svg';
 
 export default {
   props: ['glyph', 'width', 'height']

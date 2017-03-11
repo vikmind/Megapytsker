@@ -29,10 +29,12 @@
       </div>
     </div>
     <div class="tapemodal__body">
-      <div v-if="openedMode === 'edit'" class="operations-list">
+      <div v-if="openedMode === 'edit'">
+      <div  class="operations-list" v-dragula="tape.Operations" drake="operations">
         <OperationEdit
             :operation="operation"
             v-for="(operation,idx) in tape.Operations"
+            :key="operation"
             v-on:delete="onDelete(tape, idx)"
           />
         <button
@@ -43,6 +45,7 @@
             Add new operation
           </div>
         </button>
+      </div>
       </div>
       <div v-else class="operations-list">
         <Operation
@@ -99,7 +102,7 @@ export default {
       tape.Operations.splice(idx, 1);
     },
     onAdd: (tape) => {
-      tape.Operations.push({tapeId: tape.id, type: null, args: []})
+      tape.Operations.push({tapeId: tape.id, type: null, args: ['1']})
     }
   }
 }

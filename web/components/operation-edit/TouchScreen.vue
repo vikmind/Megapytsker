@@ -25,11 +25,9 @@ import socket from '../../store/socket.js';
 export default {
   created (){
     socket.on('screenshot', data => {
+      console.log('screenshot listener');
       this.opened = (data.timestamp === this.timestamp);
     });
-  },
-  beforeDestroy (){
-    socket.off('screenshot');
   },
   props: ['args', 'argsInfo'],
   data(){

@@ -42,6 +42,9 @@
     <button class="operation__action-button" @click="togglePopup">
       <Icon :glyph="operation.type || 'grid'" width="32" height="32" />
     </button>
+    <button class="handle">
+      <Icon glyph="move" width="32" height="32" />
+    </button>
     <button class="operation__action-button" @click="$emit('delete')">
       <Icon glyph="trash" width="32" height="32" />
     </button>
@@ -102,9 +105,36 @@ export default {
 <style lang="scss">
 .operation-edit{
   height: 443px;
+  &.gu-transit{
+    &>.operation__content{
+      background-color: #88f797;
+    }
+  }
 }
 .edit-form{}
 .operation__action-button{
   color: #fefefe;
+}
+.gu-transit{
+  transform: scale(1.05);
+  transform-origin: 10px center;
+}
+.handle {
+  padding: 0 5px;
+  margin-right: 5px;
+  cursor: move;
+  position: relative;
+  color: #fff;
+  &:focus{
+    outline: none;
+  }
+  &::after{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
 }
 </style>
