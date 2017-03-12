@@ -99,9 +99,10 @@ export default {
   z-index: 100;
 }
 .tapemodal__header{
-  background: #607d8b;
-  color: #fff;
-  border-bottom: 1px solid #979797;
+  background: #ADF8B9;
+  color: #1F1F1F;
+  position: relative;
+  z-index: 20;
   box-shadow: 0 2px 4px 0 rgba(0,0,0,0.22);
   flex: 0 0 auto;
   display: flex;
@@ -117,6 +118,7 @@ export default {
 }
 h1.tapemodal__title{
   margin: 0;
+  font-size: 24px;
 }
 .tapemodal__body{
   background: #F3F3F3;

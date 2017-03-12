@@ -39,13 +39,13 @@
     />
   </div>
   <div class="operation__actions">
-    <button class="operation__action-button" @click="togglePopup">
+    <button class="operation__action-button is-operation" @click="togglePopup">
       <Icon :glyph="operation.type || 'grid'" width="32" height="32" />
     </button>
     <button class="handle">
       <Icon glyph="move" width="32" height="32" />
     </button>
-    <button class="operation__action-button" @click="$emit('delete')">
+    <button class="operation__action-button is-remove" @click="$emit('delete')">
       <Icon glyph="trash" width="32" height="32" />
     </button>
   </div>
@@ -103,6 +103,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import 'foundation-settings';
 .operation-edit{
   height: 443px;
   &.gu-transit{
@@ -114,6 +115,13 @@ export default {
 .edit-form{}
 .operation__action-button{
   color: #fefefe;
+  cursor: pointer;
+  &.is-remove:hover{
+    color: map-get($foundation-palette, alert);
+  }
+  &.is-operation:hover{
+    color: map-get($foundation-palette, primary);
+  }
 }
 .gu-transit{
   transform: scale(1.05);
