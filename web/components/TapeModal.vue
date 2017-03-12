@@ -52,19 +52,13 @@ export default {
     ])
   },
   data (){
-    // Deep clone is needed
-    const tape = (this.$store.state.openedTapeId === 'NEW')
-      ? {id: 'NEW', name: 'NEW TAPE', Operations: []}
-      : this.$store.state.tapes.find(item => item.id === this.$store.state.openedTapeId);
     return {
-      tape: JSON.parse(JSON.stringify(tape))
+      tape: this.findCurrentTape()
     }
   },
   watch: {
     openedTapeId: function(value){
-      const tape = this.$store.state.tapes.find(item => item.id === value);
-      console.log('watcher:', tape);
-      this.tape = JSON.parse(JSON.stringify(tape));
+      this.tape = this.findCurrentTape();
     }
   },
   methods: {
@@ -73,6 +67,12 @@ export default {
     },
     onAdd: (tape) => {
       tape.Operations.push({tapeId: tape.id, type: null, args: ['1']})
+    },
+    findCurrentTape() {
+      const tape = (this.$store.state.openedTapeId === 'NEW')
+        ? {id: 'NEW', name: 'NEW TAPE', Operations: []}
+        : this.$store.state.tapes.find(item => item.id === this.$store.state.openedTapeId);
+      return JSON.parse(JSON.stringify(tape));
     }
   }
 }

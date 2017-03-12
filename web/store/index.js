@@ -43,7 +43,6 @@ socket.on('operation_id', function(operation){
   store.commit(types.RUN_OPERATION, operation);
 });
 socket.on('complete', function(data){
-  console.log('complete', data);
   store.commit(types.RUN_OPERATION, null);
   store.commit(types.END_RUN_TAPE);
 });

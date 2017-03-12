@@ -13,7 +13,17 @@ import { mapState, mapActions } from 'vuex';
 import Topbar from './Topbar.vue';
 import Tapeslist from './Tapeslist.vue';
 import TapeModal from './TapeModal.vue';
-
+const CardPath = {
+  parse(hash){
+    const result = /#card\/((?:NEW)|\d+)/.exec(hash);
+    if (result){
+      return (result[1] === 'NEW') ? 'NEW' : parseInt(result[1], 10);
+    }
+  },
+  build(id){
+    return `#card/${id}`
+  }
+};
 export default {
   computed:
     mapState([
@@ -25,15 +35,27 @@ export default {
     Topbar, Tapeslist, TapeModal
   },
   created() {
-    document.addEventListener('keydown', this.onKeyDown)
+    document.addEventListener('keydown', this.onKeyDown);
+    window.addEventListener('hashchange', this.onHashChange);
   },
   beforeDestroy() {
-    document.removeEventListener('keydown', this.onKeyDown)
+    document.removeEventListener('keydown', this.onKeyDown);
+    window.removeEventListener('hashchange', this.onHashChange);
+  },
+  watch: {
+    openedTapeId: function(tapeId){
+      if (tapeId){
+        window.location.hash = CardPath.build(tapeId);
+      } else {
+        window.location.hash = '';
+      }
+    }
   },
   methods: {
     ...mapActions([
       'selectCard',
-      'closeTape'
+      'closeTape',
+      'openTape'
     ]),
     onKeyDown(e) {
       switch (e.keyCode) {
@@ -43,6 +65,12 @@ export default {
         case 52: if (!this.openedTapeId) this.selectCard(this.cards[3]); break;
         case 53: if (!this.openedTapeId) this.selectCard(this.cards[4]); break;
         case 27: this.closeTape(); break;
+      }
+    },
+    onHashChange(e){
+      const tapeId = CardPath.parse(window.location.hash);
+      if (tapeId !== this.openedTapeId){
+        this.openTape(tapeId);
       }
     }
   }
