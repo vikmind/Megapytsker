@@ -5,32 +5,10 @@
         <input type="text" v-model="tape.name">
       </label>
       <h1 v-else class="tapemodal__title">{{ tape.name }}</h1>
-      <div class="tapemodal__actions">
-        <button class="button success" v-if="openedMode === 'view'" @click="executeSequence(tape)" title="Execute">
-          <Icon glyph="execute" width="32" height="32" /><br>
-          Run
-        </button>
-        <button class="button" v-if="openedMode === 'view'" @click="editTape(tape.id)">
-          <Icon glyph="edit" width="32" height="32" /><br>
-          Edit
-        </button>
-        <button class="button alert" v-if="openedMode === 'edit'" @click="removeTape(tape.id)">
-          <Icon glyph="trash" width="32" height="32" /><br>
-          Remove
-        </button>
-        <button class="button" v-if="openedMode === 'edit'" @click="saveTape(tape)" title="Save">
-          <Icon glyph="save" width="32" height="32" /><br>
-          Save
-        </button>
-        <button class="button secondary" @click="closeTape()">
-          <Icon glyph="close" width="32" height="32" /><br>
-          Close
-        </button>
-      </div>
+      <TapeActions :tape="tape" />
     </div>
     <div class="tapemodal__body">
-      <div v-if="openedMode === 'edit'">
-      <div  class="operations-list" v-dragula="tape.Operations" drake="operations">
+      <div v-if="openedMode === 'edit'" class="operations-list" v-dragula="tape.Operations" drake="operations">
         <OperationEdit
             :operation="operation"
             v-for="(operation,idx) in tape.Operations"
@@ -46,7 +24,6 @@
           </div>
         </button>
       </div>
-      </div>
       <div v-else class="operations-list">
         <Operation
             :operation="operation"
@@ -58,15 +35,15 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import Operation from './Operation.vue';
 import OperationEdit from './OperationEdit.vue';
-import Icon from './Icon.vue';
+import TapeActions from './TapeActions.vue';
 export default {
   components: {
     Operation,
     OperationEdit,
-    Icon
+    TapeActions
   },
   computed: {
     ...mapState([
@@ -91,13 +68,6 @@ export default {
     }
   },
   methods: {
-    ...mapActions([
-      'closeTape',
-      'editTape',
-      'saveTape',
-      'removeTape',
-      'executeSequence'
-    ]),
     onDelete: (tape, idx) => {
       tape.Operations.splice(idx, 1);
     },
@@ -148,18 +118,6 @@ export default {
 h1.tapemodal__title{
   margin: 0;
 }
-.tapemodal__actions{
-  display: flex;
-  .button{
-    margin: 0;
-    min-width: 80px;
-    font-size: 0.8rem;
-    &:focus{
-      outline: none;
-      box-shadow: 0 0 1px 1px white inset;
-    }
-  }
-}
 .tapemodal__body{
   background: #F3F3F3;
   flex: 0 1 auto;
@@ -181,10 +139,9 @@ h1.tapemodal__title{
   }
   .tapemodal__title{
     align-self: stretch;
-    margin-bottom: 1em;
   }
-  .tapemodal__actions{
-    align-self: flex-end;
+  label.tapemodal__title{
+    padding: 0;
   }
 }
 </style>

@@ -46,8 +46,16 @@ export default function socketConnectionCallback({operationsExecutor, port, devi
       stepReporter
     )
     .then(()=> {
-      socket.emit('complete');
+      socket.emit('complete', {done: true});
+    }, (err) => {
+      socket.emit('complete', {error: 'Interrupted'});
+    })
+    .catch(err => {
+      socket.emit('complete', {error: '¯\_(ツ)_/¯'});
     });
+  });
+  socket.on('stop_execution', function(data){
+    global.stopExecutingSequence = true;
   });
 
   // Saving

@@ -11,6 +11,9 @@ export default function createActions(socket){
         socket.emit('execute', tape);
       }
     },
+    stopExecution ({}) {
+      socket.emit('stop_execution');
+    },
     openTape ({commit, state}, tapeId){
       commit(types.OPEN_TAPE, tapeId);
     },

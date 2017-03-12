@@ -19,6 +19,7 @@ import grid from '../img/grid.svg';
 import trash from '../img/trash.svg';
 import close from '../img/close.svg';
 import execute from '../img/execute.svg';
+import stop from '../img/stop.svg';
 import save from '../img/save.svg';
 import edit from '../img/edit.svg';
 import move from '../img/move.svg';
