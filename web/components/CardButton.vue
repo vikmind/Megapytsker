@@ -72,6 +72,7 @@ body{
 }
 .card:focus{
   outline: none;
+  background: darken(#F3F3F3, 10%);
 }
 .card:active{
   box-shadow: 0 0 0 0 #cfcfcf;

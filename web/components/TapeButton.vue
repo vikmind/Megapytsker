@@ -24,7 +24,7 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="scss">
 .tape__wrapper{
   height: 180px;
   width: 280px;
@@ -55,6 +55,7 @@ export default {
 }
 .tape:focus{
   outline: none;
+  background: darken(#F3F3F3, 10%);
 }
 .tape:active{
   box-shadow: 0 0 0 0 lightgray;
@@ -62,6 +63,9 @@ export default {
 }
 .tape.is-green{
   background: #ADF8B9;
+  &:focus{
+    background: darken(#ADF8B9, 20%);
+  }
 }
 .tape::after{
   content: '';

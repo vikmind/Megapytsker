@@ -12,7 +12,7 @@
       <Icon glyph="edit" width="32" height="32" /><br>
       Edit
     </button>
-    <button class="button alert" v-if="openedMode === 'edit'" @click="removeTape(tape.id)">
+    <button class="button alert" v-if="openedMode === 'edit' && tape.id !== 'NEW'" @click="removeTape(tape.id)">
       <Icon glyph="trash" width="32" height="32" /><br>
       Remove
     </button>
@@ -48,6 +48,9 @@ export default {
       'executeSequence',
       'stopExecution'
     ])
+  },
+  mounted(){
+    this.$el.querySelector('button').focus();
   }
 }
 </script>
