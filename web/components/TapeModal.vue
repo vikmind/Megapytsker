@@ -8,7 +8,7 @@
       <TapeActions :tape="tape" />
     </div>
     <div class="tapemodal__body">
-      <div v-if="openedMode === 'edit'" class="operations-list" v-dragula="tape.Operations" drake="operations">
+      <draggable v-if="openedMode === 'edit'" v-model="tape.Operations" :options="dragOptions" class="operations-list">
         <OperationEdit
             :operation="operation"
             v-for="(operation,idx) in tape.Operations"
@@ -23,7 +23,7 @@
             Add new operation
           </div>
         </button>
-      </div>
+      </draggable>
       <div v-else class="operations-list">
         <Operation
             :operation="operation"
@@ -39,11 +39,13 @@ import { mapActions, mapState } from 'vuex';
 import Operation from './Operation.vue';
 import OperationEdit from './OperationEdit.vue';
 import TapeActions from './TapeActions.vue';
+import draggable from 'vuedraggable';
 export default {
   components: {
     Operation,
     OperationEdit,
-    TapeActions
+    TapeActions,
+    draggable
   },
   computed: {
     ...mapState([
@@ -53,7 +55,10 @@ export default {
   },
   data (){
     return {
-      tape: this.findCurrentTape()
+      tape: this.findCurrentTape(),
+      dragOptions: {
+        handle: '.handle'
+      }
     }
   },
   watch: {
@@ -69,10 +74,11 @@ export default {
       tape.Operations.push({tapeId: tape.id, type: null, args: ['1']})
     },
     findCurrentTape() {
+      const newTape = {id: 'NEW', name: 'NEW TAPE', Operations: []};
       const tape = (this.$store.state.openedTapeId === 'NEW')
-        ? {id: 'NEW', name: 'NEW TAPE', Operations: []}
+        ? newTape
         : this.$store.state.tapes.find(item => item.id === this.$store.state.openedTapeId);
-      return JSON.parse(JSON.stringify(tape));
+      return JSON.parse(JSON.stringify(tape || newTape));
     }
   }
 }

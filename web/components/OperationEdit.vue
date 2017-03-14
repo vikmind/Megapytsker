@@ -106,11 +106,6 @@ export default {
 @import 'foundation-settings';
 .operation-edit{
   height: 443px;
-  &.gu-transit{
-    &>.operation__content{
-      background-color: #88f797;
-    }
-  }
 }
 .edit-form{}
 .operation__action-button{
@@ -122,10 +117,6 @@ export default {
   &.is-operation:hover{
     color: map-get($foundation-palette, primary);
   }
-}
-.gu-transit{
-  transform: scale(1.05);
-  transform-origin: 10px center;
 }
 .handle {
   padding: 0 5px;
