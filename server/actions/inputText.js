@@ -1,5 +1,5 @@
 export function inputText({client, device, sleep}, text, time){
-  const isStringAllowed = /^[A-z0-9\_]+$/.test(text);
+  // const isStringAllowed = /^[A-z0-9\_]+$/.test(text);
   const sleepTime = parseInt(time, 10) || 1000;
   // if (!isStringAllowed) return Promise.reject(new Error('String unpermitted'));
   let input = '';
@@ -17,7 +17,6 @@ export function inputText({client, device, sleep}, text, time){
             .then(() => sleep(sleepTime))
             .then( result => true )
             .catch( err => {
-              console.error('Something went wrong:', err.stack);
               throw new Error(`Something went wrong: ${err}`)
             });
   }

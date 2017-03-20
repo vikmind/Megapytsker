@@ -9,7 +9,18 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development babel-watch -x web server/index.js",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
-    "seed": "cd server && sequelize db:migrate && babel-node seeders/read-ticket.js"
+    "seed": "cd server && sequelize db:migrate && babel-node seeders/read-ticket.js",
+    "watch": "ava --watch",
+    "test": "nyc ava && nyc report --reporter=lcov"
+  },
+  "ava": {
+    "files": [
+      "./server/actions/inputText.test.js"
+    ],
+    "require": [
+      "babel-register"
+    ],
+    "babel": "inherit"
   },
   "dependencies": {
     "adbkit": "^2.7.0",
@@ -26,6 +37,8 @@
     "vuex": "^2.1.2"
   },
   "devDependencies": {
+    "ava": "^0.18.2",
+    "nyc": "^10.1.2",
     "babel-cli": "^6.22.2",
     "babel-core": "^6.0.0",
     "babel-loader": "^6.0.0",
@@ -34,9 +47,9 @@
     "babel-watch": "^2.0.6",
     "cross-env": "^3.0.0",
     "css-loader": "^0.25.0",
+    "file-loader": "^0.9.0",
     "node-sass": "^4.5.0",
     "sass-loader": "^5.0.1",
-    "file-loader": "^0.9.0",
     "svg-sprite-loader": "^0.3.0",
     "vue-loader": "^10.0.0",
     "vue-template-compiler": "^2.1.0",
