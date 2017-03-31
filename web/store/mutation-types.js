@@ -1,6 +1,7 @@
-const ns = '@@Megapytsker/';
+const ns = '@@Megapytsker';
 export const INIT_STATUS = `${ns}/INIT_STATUS`;
 export const INIT_TAPES = `${ns}/INIT_TAPES`;
+export const INIT_RUNS = `${ns}/INIT_RUNS`;
 export const UPDATE_STATUS = `${ns}/UPDATE_STATUS`;
 
 export const OPEN_TAPE = `${ns}/OPEN_TAPE`;

@@ -2,16 +2,16 @@
   "development": {
     "database": "megapytsker",
     "dialect": "sqlite",
-    "storage": "../../db.sqlite"
+    "storage": "../db.sqlite"
   },
   "test": {
     "database": "megapytsker",
     "dialect": "sqlite",
-    "storage": "../../db.sqlite"
+    "storage": "../db.sqlite"
   },
   "production": {
     "database": "megapytsker",
     "dialect": "sqlite",
-    "storage": "../../db.sqlite"
+    "storage": "../db.sqlite"
   }
 }

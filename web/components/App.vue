@@ -2,6 +2,7 @@
   <div id="app">
     <Topbar />
     <Tapeslist/>
+    <Runs />
     <transition name="modal-fade">
       <TapeModal v-if="openedTapeId"/>
     </transition>
@@ -13,6 +14,8 @@ import { mapState, mapActions } from 'vuex';
 import Topbar from './Topbar.vue';
 import Tapeslist from './Tapeslist.vue';
 import TapeModal from './TapeModal.vue';
+import Runs from './Runs.vue';
+
 const CardPath = {
   parse(hash){
     const result = /#card\/((?:NEW)|\d+)/.exec(hash);
@@ -32,7 +35,7 @@ export default {
     ]),
   name: 'app',
   components: {
-    Topbar, Tapeslist, TapeModal
+    Topbar, Tapeslist, TapeModal, Runs,
   },
   created() {
     document.addEventListener('keydown', this.onKeyDown);

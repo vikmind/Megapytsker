@@ -7,6 +7,7 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function(models) {
         Tape.hasMany(models.Operation);
+        Tape.hasMany(models.Run);
       }
     }
   });

@@ -20,6 +20,7 @@ const store = new Vuex.Store({
       server: null
     },
     tapes: [],
+    runs: [],
     openedTapeId: null,
     currentOperationId: null,
     openedMode: 'view'
@@ -32,6 +33,7 @@ const store = new Vuex.Store({
 socket.on('init', function(data){
   store.commit(types.INIT_STATUS, data.status);
   store.commit(types.INIT_TAPES, data.tapes);
+  store.commit(types.INIT_RUNS, data.runs);
 });
 socket.on('disconnect', function(){
   store.commit(types.UPDATE_STATUS, { server: false });

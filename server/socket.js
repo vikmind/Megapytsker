@@ -1,4 +1,6 @@
-export function stepReporterFactory(socket, current){
+import tapesSocket from './socket/tapes';
+
+export function stepReporterFactory({socket}, current){
   socket.emit('executing', current.name);
   if (current.id){
     socket.emit('operation_id', current.id);
@@ -7,7 +9,6 @@ export function stepReporterFactory(socket, current){
 
 export default function socketConnectionCallback({operationsExecutor, port, device, client, selectCard, db}, socket){
   console.log(socket.id, 'connected!');
-  const stepReporter = stepReporterFactory.bind(null, socket);
 
   // Servo slider
   socket.on('servo', function(data){
@@ -41,9 +42,14 @@ export default function socketConnectionCallback({operationsExecutor, port, devi
   // Execution
   socket.on('execute', function(data){
     console.log(`emit exection`);
+    db.Run.create({
+      TapeId: data.id,
+      tapeName: data.name,
+      info: JSON.stringify(data.Operations, null, 2)
+    });
     operationsExecutor(
       data.Operations,
-      stepReporter
+      stepReporterFactory.bind(null, {socket})
     )
     .then(()=> {
       socket.emit('complete', {done: true});
@@ -58,72 +64,31 @@ export default function socketConnectionCallback({operationsExecutor, port, devi
     global.stopExecutingSequence = true;
   });
 
-  // Saving
-  socket.on('save_tape', function(tape){
-    console.log(`Saving tape`);
-    const operations = tape.Operations.map(item => {return {...item, id: undefined, TapeId: tape.id}});
-    db.Tape.upsert(tape)
-    .then(isCreated => {
-      return db.Operation.destroy({where: {tapeId: tape.id}});
-    })
-    .then(()=>{
-      return db.Operation.bulkCreate(operations);
-    })
-    .then(items => {
-      return db.Tape.findAll({
-        where: {id: tape.id},
-        include: [db.Operation],
-        order: [[db.Operation, 'id']]
-      });
-    })
-    .then(tapes => {
-      socket.emit('save_tape', {tape: tapes[0], timestamp: tapes[0].id})
-    });
-  });
-  socket.on('add_tape', function({tape, timestamp}){
-    console.log(`Adding tape`);
-    let insertedId = null;
-    db.Tape.create(tape)
-    .then(inserted => {
-      insertedId = inserted.id;
-      const operations = tape.Operations.map(item => {return {...item, TapeId: insertedId}});
-      return db.Operation.bulkCreate(operations);
-    })
-    .then(items => {
-      return db.Tape.findAll({
-        where: {id: insertedId},
-        include: [db.Operation],
-        order: [[db.Operation, 'id']]
-      });
-    })
-    .then(tapes => {
-      socket.emit('save_tape', {tape: tapes[0], timestamp})
-    });
-  });
-  socket.on('remove_tape', function(tapeId){
-    console.log(`Removing tape`);
-    db.Tape.destroy({
-      where: { id: tapeId }
-    })
-    .then(count => {
-      socket.emit('removed_tape', `count: ${count}`)
-    });
-  });
+  // Tapes
+  tapesSocket({operationsExecutor, port, device, client, selectCard, db}, socket);
 
   // Init
   selectCard('INIT');
+  let tapes = [];
   db.Tape.findAll({
     include: [db.Operation],
     order: [['id'], [db.Operation, 'id' ]]
   })
-  .then(tapes => {
+  .then(foundTapes => {
+    tapes = foundTapes;
+    return db.Run.findAll({
+      order: ['id']
+    });
+  })
+  .then(foundRuns => {
     socket.emit('init', {
       status: {
         arduino: port.isOpen(),
         famoco: !!device,
         server: true
       },
-      tapes
+      tapes,
+      runs: foundRuns
     });
-  });
+  })
 };

@@ -5,7 +5,10 @@ export default {
     state.status = status;
   },
   [types.INIT_TAPES] (state, tapes) {
-    state.tapes = tapes
+    state.tapes = tapes;
+  },
+  [types.INIT_RUNS] (state, runs) {
+    state.runs = runs;
   },
   [types.UPDATE_STATUS] (state, status) {
     state.status = {...state.status, status};
