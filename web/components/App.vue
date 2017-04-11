@@ -2,7 +2,6 @@
   <div id="app">
     <Topbar />
     <Tapeslist/>
-    <Runs />
     <transition name="modal-fade">
       <TapeModal v-if="openedTapeId"/>
     </transition>

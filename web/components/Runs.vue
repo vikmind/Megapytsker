@@ -3,6 +3,7 @@
     <h1 class="tapeslist__title">Runs</h1>
     <div class="run-block" v-for="run in runs">
       <h3>{{ run.tapeName }}</h3>
+      <pre>{{ run.id }}</pre>
       <pre>{{ run.info }}</pre>
     </div>
   </section>

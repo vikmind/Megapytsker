@@ -58,10 +58,11 @@ export default {
   display: flex;
   flex-wrap: wrap;
   flex-grow: 1;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .item{
-  margin: 1em 0;
+  flex-basis: 50%;
   cursor: pointer;
   color: #6453f3;
 }

@@ -41,6 +41,21 @@ export default {
       ]
     },
     {
+      identifier: 'inputText',
+      name: 'Input Text',
+      arguments: [
+        {
+          name: 'Text or keycode (KEYCODE_BACK)',
+          type: 'String'
+        },
+        {
+          name: 'Delay (ms)',
+          type: 'Integer',
+          default: 500
+        }
+      ]
+    },
+    {
       identifier: 'touchScreen',
       name: 'Touch Screen',
       arguments: [
@@ -92,21 +107,6 @@ export default {
       ]
     },
     {
-      identifier: 'inputText',
-      name: 'Input Text',
-      arguments: [
-        {
-          name: 'Text or keycode (KEYCODE_BACK)',
-          type: 'String'
-        },
-        {
-          name: 'Delay (ms)',
-          type: 'Integer',
-          default: 500
-        }
-      ]
-    },
-    {
       identifier: 'wait',
       name: 'Waiting',
       arguments: [
@@ -131,6 +131,16 @@ export default {
           default: 1
         }
       ]
-    }
+    },
+    {
+      identifier: 'screenshot',
+      name: 'Screenshot',
+      arguments: [
+        {
+          name: 'Identifier',
+          type: 'String'
+        }
+      ]
+    },
   ]
 };

@@ -10,6 +10,7 @@ import waitFactory from './actions/wait';
 import operationsExecutorFactory from './actions/operationsExecutor';
 import tapeExecutorFactory from './actions/tapeExecutor';
 import inputTextFactory from './actions/inputText';
+import screenshotFactory from './actions/screenshot';
 
 import socketConnectionCallback from './socket.js';
 import db from './models/';
@@ -46,6 +47,7 @@ client.listDevices()
   operations.swipe = swipeFactory({client, device, sleep});
   operations.inputText = inputTextFactory({client, device, sleep});
   operations.tapeExecutor = tapeExecutorFactory({operations, db});
+  operations.screenshot = screenshotFactory({client, device, sleep, fs: require('fs')});
   const operationsExecutor = operationsExecutorFactory({operations});
   io.on('connection', socketConnectionCallback.bind(null,
     {

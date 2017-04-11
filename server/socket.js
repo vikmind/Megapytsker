@@ -46,11 +46,13 @@ export default function socketConnectionCallback({operationsExecutor, port, devi
       TapeId: data.id,
       tapeName: data.name,
       info: JSON.stringify(data.Operations, null, 2)
-    });
-    operationsExecutor(
-      data.Operations,
-      stepReporterFactory.bind(null, {socket})
-    )
+    }).then(run => {
+      return operationsExecutor(
+        data.Operations,
+        stepReporterFactory.bind(null, {socket}),
+        run.id
+      )
+    })
     .then(()=> {
       socket.emit('complete', {done: true});
     }, (err) => {

@@ -14,6 +14,7 @@ import tapeExecutor from '../img/tapeExecutor.svg';
 import touchScreen from '../img/touchScreen.svg';
 import wait from '../img/wait.svg';
 import swipe from '../img/swipe.svg';
+import screenshot from '../img/screenshot.svg';
 
 import grid from '../img/grid.svg';
 import trash from '../img/trash.svg';
