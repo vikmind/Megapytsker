@@ -8,11 +8,9 @@ export function stepReporterFactory({socket}, current){
 }
 
 export default function socketConnectionCallback({operationsExecutor, port, device, client, selectCard, db}, socket){
-  console.log(socket.id, 'connected!');
 
   // Servo slider
   socket.on('servo', function(data){
-    console.log(`emit servo with ${data.value}`);
     if (port.isOpen()){
       port.write(data.value + 'T');
     }
@@ -20,7 +18,6 @@ export default function socketConnectionCallback({operationsExecutor, port, devi
 
   // Card buttons
   socket.on('card', function(data){
-    console.log(`emit card with ${data.value}`);
     selectCard(data.value)
     .then(()=>socket.emit('servo_success'))
     .catch(()=>socket.emit('servo_failed'));
@@ -41,7 +38,6 @@ export default function socketConnectionCallback({operationsExecutor, port, devi
 
   // Execution
   socket.on('execute', function(data){
-    console.log(`emit exection`);
     db.Run.create({
       TapeId: data.id,
       tapeName: data.name,
@@ -68,6 +64,26 @@ export default function socketConnectionCallback({operationsExecutor, port, devi
 
   // Tapes
   tapesSocket({operationsExecutor, port, device, client, selectCard, db}, socket);
+
+  // Runs
+  socket.on('remove_run', function(runId){
+    db.Run.destroy({
+      where: { id: runId }
+    })
+    .then(count => {
+      socket.emit('removed_run', `count: ${count}`)
+    });
+  });
+  socket.on('get_runs', function(data){
+    db.Run.findAll({
+      order: ['id']
+    })
+    .then(foundRuns => {
+      socket.emit('new_runs', {
+        runs: foundRuns
+      });
+    });
+  });
 
   // Init
   selectCard('INIT');

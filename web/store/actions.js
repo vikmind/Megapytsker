@@ -37,6 +37,13 @@ export default function createActions(socket){
       commit(types.CLOSE_TAPE);
       commit(types.REMOVE_TAPE, tapeId);
       socket.emit('remove_tape', tapeId);
-    }
+    },
+    removeRun({ commit }, runId) {
+      commit(types.REMOVE_RUN, runId);
+      socket.emit('remove_run', runId);
+    },
+    favRun({}, runId) {
+      console.log(runId, 'will be favorited');
+    },
   }
 }

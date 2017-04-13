@@ -47,6 +47,10 @@ socket.on('operation_id', function(operation){
 socket.on('complete', function(data){
   store.commit(types.RUN_OPERATION, null);
   store.commit(types.END_RUN_TAPE);
+  socket.emit('get_runs');
+});
+socket.on('new_runs', function(data){
+  store.commit(types.INIT_RUNS, data.runs);
 });
 
 export default store;

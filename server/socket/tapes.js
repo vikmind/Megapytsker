@@ -1,6 +1,5 @@
 export default function tapesSocketInit({operationsExecutor, port, device, client, selectCard, db}, socket){
   socket.on('save_tape', function(tape){
-    console.log(`Saving tape`);
     const operations = tape.Operations.map(item => {return {...item, id: undefined, TapeId: tape.id}});
     db.Tape.upsert(tape)
     .then(isCreated => {
@@ -22,7 +21,6 @@ export default function tapesSocketInit({operationsExecutor, port, device, clien
   });
 
   socket.on('add_tape', function({tape, timestamp}){
-    console.log(`Adding tape`);
     let insertedId = null;
     db.Tape.create(tape)
     .then(inserted => {
@@ -43,7 +41,6 @@ export default function tapesSocketInit({operationsExecutor, port, device, clien
   });
 
   socket.on('remove_tape', function(tapeId){
-    console.log(`Removing tape`);
     db.Tape.destroy({
       where: { id: tapeId }
     })

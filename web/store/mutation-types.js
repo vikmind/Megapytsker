@@ -14,3 +14,4 @@ export const REMOVE_TAPE = `${ns}/REMOVE_TAPE`;
 export const RUN_TAPE    = `${ns}/RUN_TAPE`;
 export const END_RUN_TAPE = `${ns}/END_RUN_TAPE`;
 export const RUN_OPERATION = `${ns}/RUN_OPERATION`;
+export const REMOVE_RUN = `${ns}/REMOVE_RUN`;

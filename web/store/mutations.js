@@ -52,5 +52,9 @@ export default {
   },
   [types.RUN_OPERATION] (state, operationId){
     state.currentOperationId = operationId;
-  }
+  },
+  [types.REMOVE_RUN] (state, runId){
+    const runIndx = state.runs.findIndex(item => item.id === runId);
+    state.runs = [...state.runs.slice(0, runIndx), ...state.runs.slice(runIndx + 1)];
+  },
 };

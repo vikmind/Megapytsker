@@ -30,28 +30,35 @@
             v-for="operation in tape.Operations"
           />
       </div>
+      <Runs v-if="openedMode === 'view'" :runs="runs" />
     </div>
   </div>
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
+import { mapActions, mapState, mapGetters } from 'vuex';
 import Operation from './Operation.vue';
 import OperationEdit from './OperationEdit.vue';
 import TapeActions from './TapeActions.vue';
 import draggable from 'vuedraggable';
+import Runs from './Runs.vue';
+
 export default {
   components: {
     Operation,
     OperationEdit,
     TapeActions,
-    draggable
+    draggable,
+    Runs,
   },
   computed: {
     ...mapState([
       'openedMode',
       'openedTapeId'
-    ])
+    ]),
+    ...mapGetters({
+      runs: 'runsForTape',
+    }),
   },
   data (){
     return {

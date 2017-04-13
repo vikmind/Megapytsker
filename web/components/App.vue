@@ -2,6 +2,7 @@
   <div id="app">
     <Topbar />
     <Tapeslist/>
+    <Runs :runs="runs"/>
     <transition name="modal-fade">
       <TapeModal v-if="openedTapeId"/>
     </transition>
@@ -30,7 +31,8 @@ export default {
   computed:
     mapState([
       'openedTapeId',
-      'cards'
+      'cards',
+      'runs',
     ]),
   name: 'app',
   components: {
