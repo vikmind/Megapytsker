@@ -39,6 +39,7 @@ jspm_packages
 # Custom
 dist
 db.sqlite
+public/runs
 
 # OSX
 .DS_Store
