@@ -40,6 +40,7 @@ socket.on('disconnect', function(){
 });
 socket.on('save_tape', function(data){
   store.commit(types.UPDATE_TAPE, data);
+  socket.emit('get_runs');
 });
 socket.on('operation_id', function(operation){
   store.commit(types.RUN_OPERATION, operation);

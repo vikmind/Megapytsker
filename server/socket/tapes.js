@@ -1,3 +1,4 @@
+import rimraf from 'rimraf';
 export default function tapesSocketInit({operationsExecutor, port, device, client, selectCard, db}, socket){
   socket.on('save_tape', function(tape){
     const operations = tape.Operations.map(item => {return {...item, id: undefined, TapeId: tape.id}});
@@ -16,7 +17,25 @@ export default function tapesSocketInit({operationsExecutor, port, device, clien
       });
     })
     .then(tapes => {
-      socket.emit('save_tape', {tape: tapes[0], timestamp: tapes[0].id})
+      return Promise.all([
+        db.Run.findAll({where: {tapeId: tape.id}}),
+        Promise.resolve(tapes[0]),
+      ]);
+    })
+    .then(values => {
+      const runs = values[0];
+      const savedTape = values[1];
+      const callback = function(){
+        db.Run.destroy({where: {tapeId: savedTape.id}}).then(runs => {
+          socket.emit('save_tape', {tape: savedTape, timestamp: savedTape.id});
+        });
+      };
+      if (runs.length){
+        runs.forEach(run => {
+          rimraf.sync(`./public/runs/${run.id}`)
+        });
+      }
+      callback();
     });
   });
 
