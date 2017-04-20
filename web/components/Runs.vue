@@ -14,19 +14,27 @@
         <td>{{ (new Date(run.createdAt)).toLocaleString() }}</td>
         <td>{{ run.tapeName }}</td>
         <td v-if="!!openedTapeId">
-          <button @click="favRun(run.id)" class="button success">Y</button>
+          <button @click="favRun(run.id)" class="button" :class="{'secondary': !run.isCanon, 'success': run.isCanon}">
+            <Icon glyph="star" width="20" height="20"/>
+          </button>
         </td>
-        <td><button @click="removeRun(run.id)" class="button alert">X</button></td>
+        <td>
+          <button @click="removeRun(run.id)" class="button alert">
+            <Icon glyph="close" width="20" height="20"/>
+          </button>
+        </td>
       </tr>
     </table>
   </section>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex';
+import Icon from './Icon.vue';
 
 export default {
   props: ['runs'],
+  components: { Icon },
   computed: mapState(['openedTapeId']),
   methods: mapActions(['removeRun', 'favRun']),
 }
@@ -54,6 +62,8 @@ export default {
   }
   .button{
     margin-bottom: 0;
+    line-height: 0;
+    padding: 0.5em;
   }
 }
 </style>

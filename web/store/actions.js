@@ -42,8 +42,9 @@ export default function createActions(socket){
       commit(types.REMOVE_RUN, runId);
       socket.emit('remove_run', runId);
     },
-    favRun({}, runId) {
-      console.log(runId, 'will be favorited');
+    favRun({ commit }, runId) {
+      commit(types.FAV_RUN, runId);
+      socket.emit('canon_run', runId);
     },
   }
 }

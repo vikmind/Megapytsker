@@ -57,4 +57,15 @@ export default {
     const runIndx = state.runs.findIndex(item => item.id === runId);
     state.runs = [...state.runs.slice(0, runIndx), ...state.runs.slice(runIndx + 1)];
   },
+  [types.FAV_RUN] (state, runId){
+    const run = {
+      ...state.runs.find(item => item.id === runId),
+      isCanon: true,
+    };
+    const tapeRuns = state.runs
+      .filter(item => (item.TapeId === run.TapeId)&&(item.id !== runId))
+      .map(item => ({...item, isCanon: false}));
+    const otherRuns = state.runs.filter(item => item.TapeId !== run.TapeId);
+    state.runs = [...tapeRuns, run, ...otherRuns].sort((a,b) => (a.id > b.id) ? 1 : -1)
+  }
 };

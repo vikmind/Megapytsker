@@ -2,7 +2,8 @@
 module.exports = function(sequelize, DataTypes) {
   var Run = sequelize.define('Run', {
     tapeName: DataTypes.STRING,
-    info: DataTypes.TEXT
+    info: DataTypes.TEXT,
+    isCanon: DataTypes.BOOLEAN,
   }, {
     classMethods: {
       associate: function(models) {
@@ -13,7 +14,16 @@ module.exports = function(sequelize, DataTypes) {
           }
         });
       }
-    }
+    },
+    instanceMethods: {
+      makeCanon: function() {
+        var self = this;
+        return Run.update({isCanon: false}, {where:{TapeId: this.TapeId}})
+          .then(function(runs){
+            self.update({isCanon: true});
+          });
+      }
+    },
   });
   return Run;
 };

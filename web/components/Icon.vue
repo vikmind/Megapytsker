@@ -24,6 +24,7 @@ import stop from '../img/stop.svg';
 import save from '../img/save.svg';
 import edit from '../img/edit.svg';
 import move from '../img/move.svg';
+import star from '../img/star.svg';
 
 export default {
   props: ['glyph', 'width', 'height']

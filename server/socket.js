@@ -1,4 +1,5 @@
 import tapesSocket from './socket/tapes';
+import runsSocket from './socket/runs';
 
 export function stepReporterFactory({socket}, current){
   socket.emit('executing', current.name);
@@ -63,27 +64,10 @@ export default function socketConnectionCallback({operationsExecutor, port, devi
   });
 
   // Tapes
-  tapesSocket({operationsExecutor, port, device, client, selectCard, db}, socket);
+  tapesSocket({ operationsExecutor, port, device, client, selectCard, db }, socket);
 
   // Runs
-  socket.on('remove_run', function(runId){
-    db.Run.destroy({
-      where: { id: runId }
-    })
-    .then(count => {
-      socket.emit('removed_run', `count: ${count}`)
-    });
-  });
-  socket.on('get_runs', function(data){
-    db.Run.findAll({
-      order: ['id']
-    })
-    .then(foundRuns => {
-      socket.emit('new_runs', {
-        runs: foundRuns
-      });
-    });
-  });
+  runsSocket({ db }, socket);
 
   // Init
   selectCard('INIT');
