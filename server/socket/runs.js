@@ -1,7 +1,8 @@
 export default function runsSocket({ db }, socket){
   socket.on('remove_run', function(runId){
     db.Run.destroy({
-      where: { id: runId }
+      where: { id: runId },
+      individualHooks: true,
     })
     .then(count => {
       socket.emit('removed_run', `count: ${count}`)

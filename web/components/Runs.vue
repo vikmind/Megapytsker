@@ -6,6 +6,7 @@
         <th>ID</th>
         <th>Time</th>
         <th>Name</th>
+        <th>Info</th>
         <th></th>
         <th v-if="!!openedTapeId"></th>
       </tr>
@@ -13,6 +14,7 @@
         <td>{{ run.id }}</td>
         <td>{{ (new Date(run.createdAt)).toLocaleString() }}</td>
         <td>{{ run.tapeName }}</td>
+        <td>{{ run.info }}</td>
         <td v-if="!!openedTapeId">
           <button @click="favRun(run.id)" class="button" :class="{'secondary': !run.isCanon, 'success': run.isCanon}">
             <Icon glyph="star" width="20" height="20"/>

@@ -7,7 +7,10 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function(models) {
         Tape.hasMany(models.Operation);
-        Tape.hasMany(models.Run);
+        Tape.hasMany(models.Run, {
+          onDelete: 'CASCADE',
+          hooks: true,
+        });
       }
     }
   });
