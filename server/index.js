@@ -77,6 +77,7 @@ if (process.env.NODE_ENV === 'development'){
 }
 
 // Action!
-http.listen(3000, () => {
-  console.log('listening on port 3000');
+const webPort = process.env.PORT || 3000;
+http.listen(webPort, () => {
+  console.log(`listening on port ${webPort}`);
 });
