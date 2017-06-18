@@ -31,7 +31,7 @@ port.on('open', (err) => {
   if (err) {
     return console.log('Error on open: ', err.message);
   }
-  console.log('port opened');
+  console.log(`port opened on ${config.arduinoPort}`);
 });
 
 // ADB and operations

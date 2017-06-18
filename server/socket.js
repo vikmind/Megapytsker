@@ -21,7 +21,7 @@ export default function socketConnectionCallback({operationsExecutor, port, devi
   socket.on('card', function(data){
     selectCard(data.value)
     .then(()=>socket.emit('servo_success'))
-    .catch(()=>socket.emit('servo_failed'));
+    .catch(e=>socket.emit('servo_failed', e));
   });
 
   // Screenshots

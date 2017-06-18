@@ -1,5 +1,5 @@
 export default {
-  arduinoPort: '/dev/cu.usbmodem1A1221',
+  arduinoPort: '/dev/cu.usbmodem1411',
   webFolder: 'public',
   cards: [
     {
