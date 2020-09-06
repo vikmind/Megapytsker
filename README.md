@@ -1,6 +1,10 @@
 # Megaпыцкер
 
-Ultimate NFC cards testing robot
+Ultimate NFC cards testing robot. The idea was to create hardware/software setup for testing NFC termianl apps with real chips.
+
+Hardware part contains from a box with terminal ontop and a wheel with few cards rotated by servo motor. ([Playlist with short demos](https://www.youtube.com/playlist?list=PLOaxZ77iqbTC03IpIPj3qVahukUgppZUp))
+
+Software part: node.js server with vue frontend with abiliaty to create automation scripts.
 
 ## Technologies
 
